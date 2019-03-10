@@ -1,8 +1,8 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { Router, Stack, Scene } from "react-native-router-flux";
 
-import { Home } from "./Screens/HomeScreen/index";
+import { Home } from "./Screens/HomeScreen";
 import { Menu } from "./Screens/MenuScreen/index";
 
 export default class App extends React.Component {
@@ -23,6 +23,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 });
