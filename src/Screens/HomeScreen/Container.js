@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 
+import { View } from "react-native";
+
+import { layout } from "../../Styles/layout";
 import StoreList from "./Presenter";
 
 class Home extends Component {
@@ -50,7 +53,12 @@ class Home extends Component {
 
   render() {
     const { items } = this.state;
-    return <StoreList items={items} />;
+    return (
+      <React.Fragment>
+        <View style={[layout.navBar]} />
+        <StoreList items={items} />
+      </React.Fragment>
+    );
   }
 }
 
