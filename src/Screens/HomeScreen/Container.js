@@ -5,13 +5,8 @@ import { View } from "react-native";
 import { layout } from "../../Styles/layout";
 import StoreList from "./Presenter";
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      items: [
-        {
+/*
+{
           key: "menu",
           name: "맥도날드",
           image:
@@ -47,12 +42,34 @@ class Home extends Component {
           image:
             "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFsAAABECAMAAADZaLnlAAAA8FBMVEX////qAADrHCT4vL71pabsAB7+9fX5nhzrFR7609T6yMvsABX0mJrxY2z+5sD1oqT+7M/uGy797u/sOTz++vr/8d7tAA//4LL84+P729z6sTT7ukn++O/tJjD3r7DwcXPygYP1maH0kZX5pB33tbbuLTzuN0TzcGjyeX/vTVT5mQD8xGXzh4v+3KP/3oftRUjvWl/zcH7vTV30mjL5wpLxewDyhwD1qFrxkAD4u571nEbtNhrvVwD7xVT6pi79zXn+04n+0nP8yY3+1ZX6rT/8x4H+5JzvO1H0ikL2l430g3v3tKv0kmz7uW3xXTr6sVS3ASVGAAAEAElEQVRYhe2Yi3KjNhRAJWQwCDDhYSJwDA7GLPJjUdImTbubmGx2N+1uH///N70SSTqz0yGZ2ulMpz4zCAHi+M7lWsJG6MCBA/9FIiuRvIqbsMwNw+JV3APqaqZGX0NtFGdTzQwj2R9tJEd7c9OzytTsGnrHd2N1Znx3vCd3cW9qmk1QtB2dPDJq9+OuNAAbaDUaH407jsaj7T7UiQ1qU6C2HY2OHhmNth/24C6kO87Gabs5Hj1yvHk7P9ndPTVVSj6kt+1mc/zApr1Ndw+cYZmSCs1vrm+3rSrBzV27XV3f3Ozs9mKZEu9kOUwnq9V227btdrtaTdLhcmd3o1LCwD1PJ5PrlWIySefD5a4JN1RKpgjcIE9BD8B+ONw97kyGbcM8Be7lcj6X/nQ+H0p2ddequnlevwG+/PL1V9B35uVvO6qjUMatmbZtar5/f5b9PHxkufOMJWLzEW2xOD9bPoX9x65qZOVCcM4b4J2mhb+nCtDf7OFr+Rfjj1CFqgivJ+nH8T7VCJ18ur59K7ldfdpr1Irx5u4zsNlz0A9EsDBEr2I+cOC1CRyvK96g4E1twYrmOB5sDitgDx1iqMOCISb3mQELandP4gz63QzDOw5AcMWCHM8QKYmJ67IMMsKxIJnl4ZCUZcZQjXPiYRwgq7sHh9h5xm3KcQGOA9g1mEA7xaW6luM1tB52u6EzeTrHGbjlPZmgWHuJu8RCHjk4V+7swT1T7sopCsjJDA+CZIqTB7dpofAhiH531rkHKsZv3Y3MSYBmcdXgGC4pNzUNw8HhC9wJnsojF3t/437KCUG0yzfcw7kQrob73v8ZjplhGOCBlZ3iqSwA/xs3j2BEBO5MfvoM3HaUYDmiwLzHHQkehqFmgSIOca1qRjREXVs3sg4sLkdMKXLk6aRpjKTh0VrVX9CErC8rTxjBi4YdOPCvQskzlP+8cAWOscK2Y6BrJLILjd33pSe5pEQBYEQMWujKSYBFCEJydU5l7Jm+4A2v/IYvJL5f6dVCr3zf7nGfYst/B78STnN4ffVq4nLmrRvvdOZxWkm3QAN2AvN7bVGKhOEQ6tSeUbOa0tpo+t2cXlxdFEjU9aw8LS0hkmlGBoWO1sUiUe7z7y8uGR4wSK6bNAktLCdzWeK6SeDpfe6CvLm6unTQYI2LjOQeF0x4HvdoPWNcxu1axU+Xlz/qdYmsUrCMgZuUlHHL4kbVG3eRUeuH9wWiohSwEiO3kRObI//yYQvlJvnZ++8Cu6JZMtMxlgtojIWB4Vmi+153ds/5+fkASaPcAlVThppr1bM8l085sGxe2bHr+758or4/FdBoov9ZPoOAKlPotq53m2y6rmx6F55+iDfox3vZ2vA/5k9whG9IrLbYbwAAAABJRU5ErkJggg==",
         },
-      ],
+*/
+
+class Home extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      items: [],
     };
   }
 
+  componentDidMount() {
+    this.getHomeApiAsync();
+  }
+
+  getHomeApiAsync = () => {
+    return fetch("http://127.0.0.1:3000/api/home")
+      .then(response => response.json())
+      .then(responseJson => {
+        this.setState({
+          items: responseJson,
+        });
+      });
+  };
+
   render() {
     const { items } = this.state;
+    console.log(items);
     return (
       <React.Fragment>
         <View style={[layout.navBar]} />
