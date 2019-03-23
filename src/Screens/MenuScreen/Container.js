@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { Actions } from "react-native-router-flux";
-import { kfc, macdonald, momstouch } from "../../Datas/datas";
 
 import { layout } from "../../Styles/layout";
 
@@ -21,22 +20,37 @@ export class Menu extends Component {
   }
 
   componentDidMount() {
-    if (this.props.store_id == 0) {
-      this.setState({
-        datas: macdonald,
-      });
-    } else if (this.props.store_id == 1) {
-      this.setState({
-        datas: momstouch,
-      });
-    } else if (this.props.store_id == 2) {
-      this.setState({
-        datas: kfc,
-      });
-    }
+    console.log(this.props.store_id);
+    this.getMenuApiAsync();
+
+    // if (this.props.store_id == 0) {
+    //   this.setState({
+    //     datas: macdonald,
+    //   });
+    // } else if (this.props.store_id == 1) {
+    //   this.setState({
+    //     datas: momstouch,
+    //   });
+    // } else if (this.props.store_id == 2) {
+    //   this.setState({
+    //     datas: kfc,
+    //   });
+    // }
   }
 
+  getMenuApiAsync = () => {
+    return fetch(`http://127.0.0.1:3000/api/store/${this.props.store_id}/menu`)
+      .then(response => response.json())
+      .then(responseJson => {
+        this.setState({
+          datas: responseJson,
+        });
+      });
+  };
+
   render() {
+    const { datas } = this.state;
+    console.log(datas);
     const menuList = this.state.datas.map((ele, index) => (
       <Tab key={index} heading={ele.category}>
         <ChildTab menu={ele.menu} />
