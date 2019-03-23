@@ -33,7 +33,13 @@ const MenuItem = props => {
   return (
     <ListItem style={styles.container}>
       <Left style={styles.left}>
-        <Thumbnail square source={{ uri: props.image }} />
+        <Thumbnail
+          square
+          source={{
+            uri:
+              "https://www.mcdelivery.co.kr/kr/static/1550824543513/assets/82/products/7523.png?",
+          }}
+        />
       </Left>
       <Body style={styles.body}>
         <Text>{props.name}</Text>
