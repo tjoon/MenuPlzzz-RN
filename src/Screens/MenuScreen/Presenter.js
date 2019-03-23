@@ -8,7 +8,6 @@ import {
   Left,
   Right,
   Body,
-  Button,
 } from "native-base";
 import PropTypes from "prop-types";
 import React from "react";
@@ -34,7 +33,7 @@ const MenuItem = props => {
   return (
     <ListItem style={styles.container}>
       <Left style={styles.left}>
-        <Thumbnail square small source={{ uri: props.image }} />
+        <Thumbnail square source={{ uri: props.image }} />
       </Left>
       <Body style={styles.body}>
         <Text>{props.name}</Text>
@@ -42,11 +41,7 @@ const MenuItem = props => {
           {props.price}
         </Text>
       </Body>
-      <Right style={styles.right}>
-        <Button transparent>
-          <Text>View</Text>
-        </Button>
-      </Right>
+      <Right style={styles.right} />
     </ListItem>
   );
 };

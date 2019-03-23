@@ -7,16 +7,17 @@ import { FlatGrid } from "react-native-super-grid";
 const StoreList = props => {
   return (
     <FlatGrid
-      itemDimension={130}
+      itemDimension={120}
       items={props.items}
       style={styles.gridView}
       renderItem={({ item, index }) => (
         <TouchableOpacity
-          onPress={() => Actions.push(item.key, { store_id: index })}
+          onPress={() =>
+            Actions.push(item.key, { store_id: index, store: item.name })}
         >
           <View style={[styles.itemContainer]}>
             <Image
-              style={{ width: "100%", height: "100%" }}
+              style={{ width: "80%", height: "80%" }}
               source={{ uri: item.image }}
               resizeMode={"stretch"}
             />
@@ -30,8 +31,8 @@ const StoreList = props => {
 
 const styles = StyleSheet.create({
   gridView: {
-    marginTop: 20,
     flex: 1,
+    backgroundColor: "#fff",
   },
   itemContainer: {
     justifyContent: "flex-end",

@@ -1,12 +1,18 @@
+import { AppLoading, Font } from "expo";
+
 import React, { Component } from "react";
+import { View, Image } from "react-native";
+import { layout } from "../../Styles/layout";
 
 import StoreList from "./Presenter";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 class Home extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      isLoadingComplete: false,
       items: [
         {
           key: "menu",
@@ -49,9 +55,54 @@ class Home extends Component {
   }
 
   render() {
-    const { items } = this.state;
-    return <StoreList items={items} />;
+    const { isLoadingComplete, items } = this.state;
+
+    if (!isLoadingComplete) {
+      return (
+        <AppLoading
+          startAsync={this._loadAssetsAsync}
+          onError={this._handleLoadingError}
+          onFinish={this._handleFinishLoading}
+        />
+      );
+    }
+
+    return (
+      <React.Fragment>
+        <View
+          style={[
+            layout.navBar,
+            { justifyContent: "center", alignItems: "flex-end" },
+          ]}
+        >
+          <Image
+            style={{ width: 140, height: 40 }}
+            source={require("../../assets/images/logo_menuplzzz.png")}
+          />
+        </View>
+        <StoreList items={items} />
+      </React.Fragment>
+    );
   }
+  _loadAssetsAsync = async () => {
+    return Promise.all([
+      //Asset.loadAsync([require("../../assets/images/icon.png")]),
+      Font.loadAsync({
+        ...Ionicons.font,
+        ...MaterialIcons.font,
+      }),
+    ]);
+  };
+
+  _handleLoadingError = error => {
+    console.log(err);
+  };
+
+  _handleFinishLoading = async () => {
+    this.setState({
+      isLoadingComplete: true,
+    });
+  };
 }
 
 export default Home;

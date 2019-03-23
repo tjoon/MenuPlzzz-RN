@@ -10,8 +10,14 @@ export default class App extends React.Component {
     return (
       <Router>
         <Stack key="root">
-          <Scene key="menu" component={Menu} title="Menu" />
-          <Scene key="home" component={Home} title="Home" initial={true} />
+          <Scene key="menu" component={Menu} title="Menu" hideNavBar={true} />
+          <Scene
+            key="home"
+            component={Home}
+            title="Home"
+            initial={true}
+            hideNavBar={true}
+          />
         </Stack>
       </Router>
     );
