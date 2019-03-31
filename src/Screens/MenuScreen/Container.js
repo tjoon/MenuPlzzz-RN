@@ -5,6 +5,7 @@ import React, { Component } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { Actions } from "react-native-router-flux";
 
+import { IP_ADDRESS } from "../../Service/service";
 import { layout } from "../../Styles/layout";
 
 import ChildTab from "./Presenter";
@@ -39,7 +40,7 @@ export class Menu extends Component {
   }
 
   getMenuApiAsync = () => {
-    return fetch(`http://127.0.0.1:3000/api/store/${this.props.store_id}/menu`)
+    return fetch(IP_ADDRESS + `/api/store/${this.props.store_id}/menu`)
       .then(response => response.json())
       .then(responseJson => {
         this.setState({
@@ -50,12 +51,28 @@ export class Menu extends Component {
 
   render() {
     const { datas } = this.state;
+    console.log("=====================");
     console.log(datas);
-    const menuList = this.state.datas.map((ele, index) => (
-      <Tab key={index} heading={ele.category}>
-        <ChildTab menu={ele.menu} />
-      </Tab>
-    ));
+    console.log("=====================");
+    const menuList = this.state.datas.map(
+      (ele, index) =>
+        Platform.OS === "android" ? (
+          <Tab
+            tabStyle={{ backgroundColor: "#fcfcfc" }}
+            activeTabStyle={{ backgroundColor: "#fcfcfc" }}
+            textStyle={{ color: "#929292" }}
+            activeTextStyle={{ color: "#0a60fe" }}
+            key={index}
+            heading={ele.category}
+          >
+            <ChildTab menu={ele.menu} />
+          </Tab>
+        ) : (
+          <Tab key={index} heading={ele.category}>
+            <ChildTab menu={ele.menu} />
+          </Tab>
+        )
+    );
 
     const { store } = this.props;
     return (
@@ -75,7 +92,16 @@ export class Menu extends Component {
           <View style={{ flex: 0.1 }} />
         </View>
 
-        <Tabs renderTabBar={() => <ScrollableTab />}>{menuList}</Tabs>
+        <Tabs
+          tabBarUnderlineStyle={{
+            backgroundColor: "#fcfcfc",
+            borderWidth: 2,
+            borderColor: "#0a60fe",
+          }}
+          renderTabBar={() => <ScrollableTab />}
+        >
+          {menuList}
+        </Tabs>
       </Container>
     );
   }
