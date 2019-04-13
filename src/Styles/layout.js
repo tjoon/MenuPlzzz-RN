@@ -14,7 +14,7 @@ export const layout = {
     flexDirection: "row",
     paddingVertical: 10,
     paddingLeft: 10,
-    backgroundColor: "#f8b102",
+    backgroundColor: "#f6b02a",
   },
 };
 

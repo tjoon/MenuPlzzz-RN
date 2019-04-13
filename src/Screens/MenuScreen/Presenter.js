@@ -14,6 +14,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 
 const ChildTab = props => {
+  console.log("kwontaehyoung");
   const menuListItem = props.menu.map((ele, index) => (
     <MenuItem key={index} image={ele.image} name={ele.name} price={ele.price} />
   ));
@@ -33,7 +34,13 @@ const MenuItem = props => {
   return (
     <ListItem style={styles.container}>
       <Left style={styles.left}>
-        <Thumbnail square source={{ uri: props.image }} />
+        <Thumbnail
+          square
+          source={{
+            uri:
+              "https://www.mcdelivery.co.kr/kr/static/1550824543513/assets/82/products/7523.png?",
+          }}
+        />
       </Left>
       <Body style={styles.body}>
         <Text>{props.name}</Text>

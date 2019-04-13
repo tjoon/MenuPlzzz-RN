@@ -10,10 +10,10 @@ const StoreList = props => {
       itemDimension={120}
       items={props.items}
       style={styles.gridView}
-      renderItem={({ item, index }) => (
+      renderItem={({ item }) => (
         <TouchableOpacity
           onPress={() =>
-            Actions.push(item.key, { store_id: index, store: item.name })}
+            Actions.push("menu", { store_id: item.id, store: item.name })}
         >
           <View style={[styles.itemContainer]}>
             <Image
