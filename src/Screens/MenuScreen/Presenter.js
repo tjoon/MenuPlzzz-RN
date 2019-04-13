@@ -14,6 +14,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 
 const ChildTab = props => {
+  console.log("kwontaehyoung");
   const menuListItem = props.menu.map((ele, index) => (
     <MenuItem key={index} image={ele.image} name={ele.name} price={ele.price} />
   ));

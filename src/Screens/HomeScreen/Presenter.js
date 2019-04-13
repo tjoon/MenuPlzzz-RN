@@ -17,7 +17,7 @@ const StoreList = props => {
         >
           <View style={[styles.itemContainer]}>
             <Image
-              style={{ width: "100%", height: "100%" }}
+              style={{ width: "80%", height: "80%" }}
               source={{ uri: item.image }}
               resizeMode={"stretch"}
             />
