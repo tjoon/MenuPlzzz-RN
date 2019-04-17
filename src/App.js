@@ -1,11 +1,46 @@
 import React from "react";
-import { StyleSheet } from "react-native";
-import { Router, Stack, Scene } from "react-native-router-flux";
+import { StyleSheet, ToastAndroid, BackHandler } from "react-native";
+import { Router, Stack, Scene, Actions } from "react-native-router-flux";
 
 import { Home } from "./Screens/HomeScreen";
 import { Menu } from "./Screens/MenuScreen/index";
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
+  }
+
+  componentWillUnmount() {
+    this.exitApp = false;
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackButton);
+  }
+
+  handleBackButton = () => {
+    if (Actions.currentScene == "home") {
+      // 2000(2초) 안에 back 버튼을 한번 더 클릭 할 경우 앱 종료
+      if (this.exitApp == undefined || !this.exitApp) {
+        ToastAndroid.show("한번 더 누르시면 종료됩니다.", ToastAndroid.SHORT);
+        this.exitApp = true;
+
+        this.timeout = setTimeout(
+          () => {
+            this.exitApp = false;
+          },
+          2000 // 2초
+        );
+      } else {
+        clearTimeout(this.timeout);
+
+        BackHandler.exitApp(); // 앱 종료
+      }
+      return true;
+    }
+  };
+
   render() {
     return (
       <Router>
@@ -29,6 +64,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
-  },
+    justifyContent: "center"
+  }
 });
