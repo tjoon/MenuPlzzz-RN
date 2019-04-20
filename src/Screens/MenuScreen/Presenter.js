@@ -7,13 +7,14 @@ import {
   ListItem,
   Left,
   Right,
-  Body,
+  Body
 } from "native-base";
 import PropTypes from "prop-types";
 import React from "react";
 import { StyleSheet } from "react-native";
 
 const ChildTab = props => {
+  console.log("kwontaehyoung");
   const menuListItem = props.menu.map((ele, index) => (
     <MenuItem key={index} image={ele.image} name={ele.name} price={ele.price} />
   ));
@@ -36,8 +37,7 @@ const MenuItem = props => {
         <Thumbnail
           square
           source={{
-            uri:
-              "https://www.mcdelivery.co.kr/kr/static/1550824543513/assets/82/products/7523.png?",
+            uri: props.image
           }}
         />
       </Left>
@@ -54,31 +54,31 @@ const MenuItem = props => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
 
   left: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
   body: {
     flex: 2,
-    flexDirection: "column",
+    flexDirection: "column"
   },
   right: {
-    flex: 1,
-  },
+    flex: 1
+  }
 });
 
 ChildTab.propTypes = {
-  menu: PropTypes.array,
+  menu: PropTypes.array
 };
 
 MenuItem.propTypes = {
   image: PropTypes.string,
   name: PropTypes.string,
-  price: PropTypes.string,
+  price: PropTypes.string
 };
 
 export default ChildTab;

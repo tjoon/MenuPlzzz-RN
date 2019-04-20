@@ -1,1 +1,2 @@
-export const IP_ADDRESS = "http://192.168.1.119:3000";
+export const IP_ADDRESS =
+  "http://ec2-54-180-52-144.ap-northeast-2.compute.amazonaws.com/back";

@@ -1,14 +1,23 @@
-import { Container, Tab, Tabs, ScrollableTab, Text } from "native-base";
+import {
+  Container,
+  Tab,
+  Tabs,
+  TabHeading,
+  ScrollableTab,
+  Text,
+} from "native-base";
 import PropTypes from "prop-types";
 
 import React, { Component } from "react";
-import { View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, Platform, StyleSheet } from "react-native";
+import Spinner from "react-native-loading-spinner-overlay";
+
 import { Actions } from "react-native-router-flux";
-
 import { IP_ADDRESS } from "../../Service/service";
-import { layout } from "../../Styles/layout";
 
+import { layout } from "../../Styles/layout";
 import ChildTab from "./Presenter";
+
 import { Ionicons } from "@expo/vector-icons";
 
 export class Menu extends Component {
@@ -17,6 +26,7 @@ export class Menu extends Component {
 
     this.state = {
       datas: [],
+      spinner: true,
     };
   }
 
@@ -45,12 +55,13 @@ export class Menu extends Component {
       .then(responseJson => {
         this.setState({
           datas: responseJson,
+          spinner: false,
         });
       });
   };
 
   render() {
-    const { datas } = this.state;
+    const { datas, spinner } = this.state;
     console.log("=====================");
     console.log(datas);
     console.log("=====================");
@@ -58,17 +69,25 @@ export class Menu extends Component {
       (ele, index) =>
         Platform.OS === "android" ? (
           <Tab
-            tabStyle={{ backgroundColor: "#fcfcfc" }}
-            activeTabStyle={{ backgroundColor: "#fcfcfc" }}
-            textStyle={{ color: "#929292" }}
-            activeTextStyle={{ color: "#0a60fe" }}
             key={index}
-            heading={ele.category}
+            // style={{ fontSize: 5 }}
+            heading={
+              <TabHeading style={{ backgroundColor: "#fcfcfc" }}>
+                <Text style={{ color: "black" }}>{ele.category}</Text>
+              </TabHeading>
+            }
           >
             <ChildTab menu={ele.menu} />
           </Tab>
         ) : (
-          <Tab key={index} heading={ele.category}>
+          <Tab
+            key={index}
+            heading={
+              <TabHeading>
+                <Text>{ele.category}</Text>
+              </TabHeading>
+            }
+          >
             <ChildTab menu={ele.menu} />
           </Tab>
         )
@@ -77,6 +96,11 @@ export class Menu extends Component {
     const { store } = this.props;
     return (
       <Container>
+        <Spinner
+          visible={spinner}
+          texContent={"Loading..."}
+          textStyle={styles.spinnerTextStyle}
+        />
         <View style={[layout.navBar, {}]}>
           <TouchableOpacity
             onPress={() => {
@@ -93,12 +117,18 @@ export class Menu extends Component {
         </View>
 
         <Tabs
-          tabBarUnderlineStyle={{
-            backgroundColor: "#fcfcfc",
-            borderWidth: 2,
-            borderColor: "#0a60fe",
-          }}
-          renderTabBar={() => <ScrollableTab />}
+          renderTabBar={() => (
+            <ScrollableTab
+              tabsContainerStyle={{
+                backgroundColor: Platform.OS == "ios" ? "#F8F8F8" : "#FF5000",
+              }} //#3F51B5
+              underlineStyle={{
+                backgroundColor: "#fcfcfc",
+                borderWidth: 2,
+                borderColor: "#0a60fe",
+              }}
+            />
+          )}
         >
           {menuList}
         </Tabs>
@@ -106,6 +136,12 @@ export class Menu extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  spinnerTextStyle: {
+    color: "#FFF",
+  },
+});
 
 Menu.propTypes = {
   store_id: PropTypes.number,
