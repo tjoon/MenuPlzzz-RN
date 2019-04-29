@@ -4,7 +4,7 @@ import {
   Tabs,
   TabHeading,
   ScrollableTab,
-  Text,
+  Text
 } from "native-base";
 import PropTypes from "prop-types";
 
@@ -26,7 +26,7 @@ export class Menu extends Component {
 
     this.state = {
       datas: [],
-      spinner: true,
+      spinner: true
     };
   }
 
@@ -55,7 +55,7 @@ export class Menu extends Component {
       .then(responseJson => {
         this.setState({
           datas: responseJson,
-          spinner: false,
+          spinner: false
         });
       });
   };
@@ -65,32 +65,31 @@ export class Menu extends Component {
     console.log("=====================");
     console.log(datas);
     console.log("=====================");
-    const menuList = this.state.datas.map(
-      (ele, index) =>
-        Platform.OS === "android" ? (
-          <Tab
-            key={index}
-            // style={{ fontSize: 5 }}
-            heading={
-              <TabHeading style={{ backgroundColor: "#fcfcfc" }}>
-                <Text style={{ color: "black" }}>{ele.category}</Text>
-              </TabHeading>
-            }
-          >
-            <ChildTab menu={ele.menu} />
-          </Tab>
-        ) : (
-          <Tab
-            key={index}
-            heading={
-              <TabHeading>
-                <Text>{ele.category}</Text>
-              </TabHeading>
-            }
-          >
-            <ChildTab menu={ele.menu} />
-          </Tab>
-        )
+    const menuList = this.state.datas.map((ele, index) =>
+      Platform.OS === "android" ? (
+        <Tab
+          key={index}
+          // style={{ fontSize: 5 }}
+          heading={
+            <TabHeading style={{ backgroundColor: "#fcfcfc" }}>
+              <Text style={{ color: "black" }}>{ele.category}</Text>
+            </TabHeading>
+          }
+        >
+          <ChildTab menu={ele.menu} />
+        </Tab>
+      ) : (
+        <Tab
+          key={index}
+          heading={
+            <TabHeading>
+              <Text>{ele.category}</Text>
+            </TabHeading>
+          }
+        >
+          <ChildTab menu={ele.menu} />
+        </Tab>
+      )
     );
 
     const { store } = this.props;
@@ -121,11 +120,12 @@ export class Menu extends Component {
             <ScrollableTab
               tabsContainerStyle={{
                 backgroundColor: Platform.OS == "ios" ? "#F8F8F8" : "#FF5000",
+                width: this.width
               }} //#3F51B5
               underlineStyle={{
                 backgroundColor: "#fcfcfc",
                 borderWidth: 2,
-                borderColor: "#0a60fe",
+                borderColor: "#0a60fe"
               }}
             />
           )}
@@ -139,12 +139,12 @@ export class Menu extends Component {
 
 const styles = StyleSheet.create({
   spinnerTextStyle: {
-    color: "#FFF",
-  },
+    color: "#FFF"
+  }
 });
 
 Menu.propTypes = {
-  store_id: PropTypes.number,
+  store_id: PropTypes.number
 };
 
 export default Menu;
