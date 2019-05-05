@@ -10,8 +10,9 @@ import {
 } from "native-base";
 import PropTypes from "prop-types";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import ImageLoad from "react-native-image-placeholder";
+const deviceWidth = Dimensions.get("window").width;
 
 const ChildTab = props => {
   const menuListItem = props.menu.map((ele, index) => (
@@ -32,7 +33,7 @@ const MenuItem = props => {
     <ListItem style={styles.container}>
       <Left style={styles.left}>
         <ImageLoad
-          style={{ width: 45, height: 45 }}
+          style={{ width: deviceWidth * 0.12, height: deviceWidth * 0.12 }}
           loadingStyle={{ size: "large", color: "black" }}
           source={{
             uri: props.image,
