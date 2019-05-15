@@ -2,6 +2,8 @@ import React from "react";
 import { StyleSheet, ToastAndroid, BackHandler } from "react-native";
 import { Router, Stack, Scene, Actions } from "react-native-router-flux";
 
+import { Font } from "expo";
+
 import { Home } from "./Screens/HomeScreen";
 import { Menu } from "./Screens/MenuScreen/index";
 
@@ -12,6 +14,9 @@ export default class App extends React.Component {
 
   componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
+    Font.loadAsync({
+      "PlayfairDisplay-Black": require("./assets/fonts/PlayfairDisplay-Bold.ttf")
+    });
   }
 
   componentWillUnmount() {

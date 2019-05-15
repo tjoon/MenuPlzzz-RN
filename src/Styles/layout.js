@@ -5,7 +5,7 @@ export const layout = {
     flex: 1,
     alignItems: "center",
     backgroundColor: "#F5FCFF",
-    width: "100%",
+    width: "100%"
   },
   navBar: {
     flex: 0.1,
@@ -14,8 +14,8 @@ export const layout = {
     flexDirection: "row",
     paddingVertical: 10,
     paddingLeft: 10,
-    backgroundColor: "#f6b02a",
-  },
+    backgroundColor: "#fff"
+  }
 };
 
 export const deviceWidth = Dimensions.get("window").width;

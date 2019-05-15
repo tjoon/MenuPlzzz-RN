@@ -20,6 +20,8 @@ import ChildTab from "./Presenter";
 
 import { Ionicons } from "@expo/vector-icons";
 
+import SvgUri from "react-native-svg-uri";
+
 export class Menu extends Component {
   constructor(props) {
     super(props);
@@ -82,8 +84,8 @@ export class Menu extends Component {
         <Tab
           key={index}
           heading={
-            <TabHeading>
-              <Text>{ele.category}</Text>
+            <TabHeading style={{ backgroundColor: "#fcfcfc" }}>
+              <Text style={{ color: "black" }}>{ele.category}</Text>
             </TabHeading>
           }
         >
@@ -108,11 +110,21 @@ export class Menu extends Component {
           >
             <Ionicons name="ios-arrow-back" size={30} />
           </TouchableOpacity>
-          <View style={{ marginBottom: 5 }}>
-            <Text style={{ fontSize: 20 }}>{store}</Text>
+          <View style={{ marginBottom: 5, alignItems: "center" }}>
+            <Text style={{ fontSize: 22, fontWeight: "bold" }}>{store}</Text>
           </View>
 
-          <View style={{ flex: 0.1 }} />
+          <TouchableOpacity
+            onPress={() => {
+              //Actions.pop();
+            }}
+          >
+            <SvgUri
+              style={{ marginRight: 10 }}
+              source={require("../../assets/images/finder.svg")}
+            />
+          </TouchableOpacity>
+          {/* <View style={{ flex: 0.1 }} /> */}
         </View>
 
         <Tabs
@@ -123,15 +135,38 @@ export class Menu extends Component {
                 width: this.width
               }} //#3F51B5
               underlineStyle={{
-                backgroundColor: "#fcfcfc",
+                backgroundColor: "#333333",
                 borderWidth: 2,
-                borderColor: "#0a60fe"
+                borderColor: "#333333"
               }}
             />
           )}
         >
           {menuList}
         </Tabs>
+
+        <TouchableOpacity
+          style={{
+            backgroundColor: "#444444",
+            flex: 0.12,
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <Text
+            style={{
+              fontFamily: "PlayfairDisplay-Black",
+              fontSize: 20,
+              fontWeight: "bold",
+              fontStyle: "normal",
+              letterSpacing: 0.01,
+              textAlign: "center",
+              color: "#ffffff"
+            }}
+          >
+            랜덤 선택
+          </Text>
+        </TouchableOpacity>
       </Container>
     );
   }
