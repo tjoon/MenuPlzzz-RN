@@ -13,7 +13,8 @@ const StoreList = props => {
       renderItem={({ item }) => (
         <TouchableOpacity
           onPress={() =>
-            Actions.push("menu", { store_id: item.id, store: item.name })}
+            Actions.push("menu", { store_id: item.id, store: item.name })
+          }
         >
           <View style={[styles.itemContainer]}>
             <Image
@@ -32,26 +33,26 @@ const StoreList = props => {
 const styles = StyleSheet.create({
   gridView: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#fff"
   },
   itemContainer: {
     justifyContent: "flex-end",
     borderRadius: 5,
     padding: 10,
     height: 150,
-    alignItems: "center",
+    alignItems: "center"
   },
   itemName: {
     fontSize: 16,
     color: "black",
     fontWeight: "600",
     justifyContent: "center",
-    alignItems: "center",
-  },
+    alignItems: "center"
+  }
 });
 
 StoreList.propTypes = {
-  items: PropTypes.array,
+  items: PropTypes.array
 };
 
 export default StoreList;

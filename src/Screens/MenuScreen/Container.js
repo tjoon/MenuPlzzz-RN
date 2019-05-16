@@ -1,3 +1,5 @@
+import { Svg } from "expo";
+const { Circle, Rect, path } = Svg;
 import {
   Container,
   Tab,
@@ -26,7 +28,8 @@ export class Menu extends Component {
 
     this.state = {
       datas: [],
-      spinner: true
+      spinner: true,
+      isLikeClicked: []
     };
   }
 
@@ -59,11 +62,24 @@ export class Menu extends Component {
         });
       });
   };
+  _likeClick = key => {
+    this._saveLike("Hello");
+    this.setState(prevState => {
+      return {
+        isLikeClicked: !prevState.isLikeClicked
+      };
+    });
+    console.log("Heart Click");
+  };
+
+  _saveLike = likeMenu => {
+    console.log(likeMenu);
+  };
 
   render() {
-    const { datas, spinner } = this.state;
+    const { datas, spinner, isLikeClicked } = this.state;
     console.log("=====================");
-    console.log(datas);
+    //console.log(datas);
     console.log("=====================");
     const menuList = this.state.datas.map((ele, index) =>
       Platform.OS === "android" ? (
@@ -87,12 +103,16 @@ export class Menu extends Component {
             </TabHeading>
           }
         >
-          <ChildTab menu={ele.menu} />
+          <ChildTab
+            menu={ele.menu}
+            like={isLikeClicked}
+            func={this._likeClick}
+          />
         </Tab>
       )
     );
 
-    const { store } = this.props;
+    const { store, isLike } = this.props;
     return (
       <Container>
         <Spinner

@@ -1,3 +1,5 @@
+import SvgUri from "react-native-svg-uri";
+
 import {
   Container,
   Content,
@@ -11,15 +13,26 @@ import {
 } from "native-base";
 import PropTypes from "prop-types";
 import React from "react";
-import { StyleSheet } from "react-native";
+import fillHeart from "../../assets/images/fill_heart.svg";
+import emptyHeart from "../../assets/images/empty_heart.svg";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 const ChildTab = props => {
-  console.log("kwontaehyoung");
+  console.log("clicked?", props.like);
+  const LikeClicked = props.like;
+  const funcLikeClick = props.func;
   const menuListItem = props.menu.map((ele, index) => (
-    <MenuItem key={index} image={ele.image} name={ele.name} price={ele.price} />
+    <MenuItem
+      key={index}
+      image={ele.image}
+      name={ele.name}
+      price={ele.price}
+      _likeClick={funcLikeClick}
+      isLikeClicked={LikeClicked}
+    />
   ));
 
-  console.log(menuListItem);
+  //console.log(menuListItem);
 
   return (
     <Container>
@@ -31,6 +44,7 @@ const ChildTab = props => {
 };
 
 const MenuItem = props => {
+  console.log(props);
   return (
     <ListItem style={styles.container}>
       <Left style={styles.left}>
@@ -47,7 +61,13 @@ const MenuItem = props => {
           {props.price}
         </Text>
       </Body>
-      <Right style={styles.right} />
+      <Right style={styles.right}>
+        <TouchableOpacity onPress={props._likeClick}>
+          <View>
+            <SvgUri source={props.isLikeClicked ? fillHeart : emptyHeart} />
+          </View>
+        </TouchableOpacity>
+      </Right>
     </ListItem>
   );
 };
@@ -68,7 +88,21 @@ const styles = StyleSheet.create({
   },
   right: {
     flex: 1
-  }
+  },
+  circle: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    borderWidth: 3,
+    marginRight: 20
+  },
+  completedCircle: {
+    borderColor: "#bbb"
+  },
+  uncompletedCircle: {
+    borderColor: "#F23657"
+  },
+  fillHeart: {}
 });
 
 ChildTab.propTypes = {
