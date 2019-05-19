@@ -21,6 +21,7 @@ import ChildTab from "./Presenter";
 import { Ionicons } from "@expo/vector-icons";
 
 import SvgUri from "react-native-svg-uri";
+import { stringify } from "qs";
 
 export class Menu extends Component {
   constructor(props) {
@@ -28,27 +29,15 @@ export class Menu extends Component {
 
     this.state = {
       datas: [],
-      spinner: true
+      spinner: true,
+      likes: [],
+      isLikeClicked: {}
     };
   }
 
   componentDidMount() {
     console.log(this.props.store_id);
     this.getMenuApiAsync();
-
-    // if (this.props.store_id == 0) {
-    //   this.setState({
-    //     datas: macdonald,
-    //   });
-    // } else if (this.props.store_id == 1) {
-    //   this.setState({
-    //     datas: momstouch,
-    //   });
-    // } else if (this.props.store_id == 2) {
-    //   this.setState({
-    //     datas: kfc,
-    //   });
-    // }
   }
 
   getMenuApiAsync = () => {
@@ -57,16 +46,30 @@ export class Menu extends Component {
       .then(responseJson => {
         this.setState({
           datas: responseJson,
-          spinner: false
+          spinner: false,
+          isLikeClicked: false
         });
       });
   };
 
+  _likeClick = (a, b) => {
+    const originLikes = this.state.likes;
+    const joined = this.state.likes.concat(a);
+    if (this.state.likes.includes(a)) {
+      this.setState({ likes: originLikes.filter(num => num !== a) });
+    } else {
+      this.setState({ likes: joined });
+    }
+
+    console.log(this.state.likes);
+    console.log(b);
+  };
+
   render() {
-    const { datas, spinner } = this.state;
+    const { datas, spinner, isLikeClicked, likes } = this.state;
     console.log("=====================");
-    console.log(datas);
-    console.log("=====================");
+    //console.log(datas);
+    console.log("=========##==========");
     const menuList = this.state.datas.map((ele, index) =>
       Platform.OS === "android" ? (
         <Tab
@@ -78,7 +81,12 @@ export class Menu extends Component {
             </TabHeading>
           }
         >
-          <ChildTab menu={ele.menu} />
+          <ChildTab
+            menu={ele.menu}
+            func={this._likeClick}
+            isLikeClicked={this.isLikeClicked}
+            likes={this.state.likes}
+          />
         </Tab>
       ) : (
         <Tab
@@ -89,7 +97,12 @@ export class Menu extends Component {
             </TabHeading>
           }
         >
-          <ChildTab menu={ele.menu} />
+          <ChildTab
+            menu={ele.menu}
+            func={this._likeClick}
+            isLikeClicked={isLikeClicked}
+            likes={this.state.likes}
+          />
         </Tab>
       )
     );
