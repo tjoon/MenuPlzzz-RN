@@ -22,8 +22,10 @@ const deviceWidth = Dimensions.get("window").width;
 
 const ChildTab = props => {
   const _likeClick = props.func;
+  const _toggleComplete = props.fucking;
   const isLikeClicked = props.isLikeClicked;
   const likes = props.likes;
+
   const menuListItem = props.menu.map((ele, index) => (
     <MenuItem
       key={index}
@@ -35,9 +37,11 @@ const ChildTab = props => {
       _likeClick={_likeClick}
       isLikeClicked={isLikeClicked}
       likes={likes}
+      _toggleComplete={_toggleComplete}
     />
   ));
-  console.log(likes);
+  console.log("pre : " + likes);
+  console.log(props.likes);
 
   return (
     <Container>
@@ -52,10 +56,15 @@ const MenuItem = props => {
   return (
     <ListItem style={styles.container}>
       <Left style={styles.left}>
-        <TouchableOpacity onPress={() => props._likeClick(props.id, props.num)}>
+        <TouchableOpacity onPress={() => props._toggleComplete()}>
           <View>
             <SvgUri
-              source={props.likes.includes(props.id) ? fillHeart : emptyHeart}
+              source={
+                props.isLikeClicked
+                  ? //props.likes.includes(props.id.toString())
+                    fillHeart
+                  : emptyHeart
+              }
             />
           </View>
         </TouchableOpacity>

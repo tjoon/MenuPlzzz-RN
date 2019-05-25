@@ -9,7 +9,13 @@ import {
 import PropTypes from "prop-types";
 
 import React, { Component } from "react";
-import { View, TouchableOpacity, Platform, StyleSheet } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Platform,
+  StyleSheet,
+  AsyncStorage
+} from "react-native";
 import Spinner from "react-native-loading-spinner-overlay";
 
 import { Actions } from "react-native-router-flux";
@@ -21,7 +27,8 @@ import ChildTab from "./Presenter";
 import { Ionicons } from "@expo/vector-icons";
 
 import SvgUri from "react-native-svg-uri";
-import { stringify } from "qs";
+import { AppLoading } from "expo";
+import uuidv1 from "uuid/v1";
 
 export class Menu extends Component {
   constructor(props) {
@@ -31,13 +38,18 @@ export class Menu extends Component {
       datas: [],
       spinner: true,
       likes: [],
-      isLikeClicked: {}
+      isLikeClicked: false,
+      newId: "",
+      loadedLikes: false,
+      myLikes: {}
     };
   }
 
   componentDidMount() {
-    console.log(this.props.store_id);
+    this._loadLikes();
     this.getMenuApiAsync();
+
+    //AsyncStorage.clear();
   }
 
   getMenuApiAsync = () => {
@@ -47,26 +59,101 @@ export class Menu extends Component {
         this.setState({
           datas: responseJson,
           spinner: false,
+          likes: [this._loadLikes()],
           isLikeClicked: false
         });
       });
   };
 
-  _likeClick = (a, b) => {
+  _toggleComplete = () => {
+    console.log("_toggleComplete Called");
+    this.setState(prevState => {
+      return {
+        isLikeClicked: !prevState.isLikeClicked
+      };
+    });
+  };
+
+  _addLikes = () => {
+    console.log("_addLikes Called");
+    const { newId } = this.state;
+    if (newId !== "") {
+      this.setState(prevState => {
+        const ID = uuidv1();
+        const newLikeObject = {
+          [ID]: {
+            id: ID,
+            isLikeClicked: false,
+            menuId: newId
+          }
+        };
+        const newState = {
+          ...prevState,
+          newId: "",
+          myLikes: {
+            ...prevState.myLikes,
+            ...newLikeObject
+          }
+        };
+        return { ...newState };
+      });
+    }
+    const newLike = {
+      ids: ""
+    };
+  };
+
+  _likeClick = (menuId, b) => {
     const originLikes = this.state.likes;
-    const joined = this.state.likes.concat(a);
-    if (this.state.likes.includes(a)) {
-      this.setState({ likes: originLikes.filter(num => num !== a) });
+    const joined = this.state.likes.concat(menuId);
+    if (this.state.likes.includes(menuId)) {
+      this.setState({ likes: originLikes.filter(num => num !== menuId) });
+      console.log("채워진 하트 클릭 : " + this.state.likes);
+      this._saveLikes(this.state.likes);
     } else {
       this.setState({ likes: joined });
+      console.log("빈 하트 클릭 : " + this.state.likes);
+      this._saveLikes(this.state.likes);
     }
 
     console.log(this.state.likes);
     console.log(b);
   };
 
+  _saveLikes = like => {
+    console.log("AsyncStorage에 저장할 값 : " + like.toString());
+    const saveLikes = AsyncStorage.setItem("like", like.toString());
+  };
+
+  // _loadLikes = async () => {
+  //   try {
+  //     const likes = await AsyncStorage.getItem("like");
+  //     const parsedLikes = likes.split(",");
+  //     this.setState({ likes: parsedLikes });
+  //     console.log("껄껄 : " + parsedLikes);
+  //     return likes;
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+  _loadLikes = () => {
+    this.setState({
+      loadedLikes: true
+    });
+  };
+
   render() {
-    const { datas, spinner, isLikeClicked, likes } = this.state;
+    const {
+      datas,
+      spinner,
+      isLikeClicked,
+      likes,
+      loadedLikes,
+      ids
+    } = this.state;
+    if (!loadedLikes) {
+      return <AppLoading />;
+    }
     console.log("=====================");
     //console.log(datas);
     console.log("=========##==========");
@@ -84,6 +171,7 @@ export class Menu extends Component {
           <ChildTab
             menu={ele.menu}
             func={this._likeClick}
+            fucking={this._toggleComplete}
             isLikeClicked={this.isLikeClicked}
             likes={this.state.likes}
           />
@@ -100,6 +188,7 @@ export class Menu extends Component {
           <ChildTab
             menu={ele.menu}
             func={this._likeClick}
+            fucking={this._toggleComplete}
             isLikeClicked={isLikeClicked}
             likes={this.state.likes}
           />
