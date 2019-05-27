@@ -27,8 +27,6 @@ import ChildTab from "./Presenter";
 import { Ionicons } from "@expo/vector-icons";
 
 import SvgUri from "react-native-svg-uri";
-import { AppLoading } from "expo";
-import uuidv1 from "uuid/v1";
 
 export class Menu extends Component {
   constructor(props) {
@@ -37,19 +35,13 @@ export class Menu extends Component {
     this.state = {
       datas: [],
       spinner: true,
-      likes: [],
-      isLikeClicked: false,
-      newId: "",
-      loadedLikes: false,
       myLikes: {}
     };
   }
 
   componentDidMount() {
-    this._loadLikes();
     this.getMenuApiAsync();
-
-    //AsyncStorage.clear();
+    this._load();
   }
 
   getMenuApiAsync = () => {
@@ -58,105 +50,57 @@ export class Menu extends Component {
       .then(responseJson => {
         this.setState({
           datas: responseJson,
-          spinner: false,
-          likes: [this._loadLikes()],
-          isLikeClicked: false
+          spinner: false
         });
       });
   };
 
-  _toggleComplete = () => {
-    console.log("_toggleComplete Called");
+  _likeClick = id => {
     this.setState(prevState => {
-      return {
-        isLikeClicked: !prevState.isLikeClicked
-      };
-    });
-  };
+      const myLikes = prevState.myLikes;
+      if (myLikes[id]) {
+        delete myLikes[id];
+        const newState = {
+          ...prevState,
+          ...myLikes
+        };
 
-  _addLikes = () => {
-    console.log("_addLikes Called");
-    const { newId } = this.state;
-    if (newId !== "") {
-      this.setState(prevState => {
-        const ID = uuidv1();
+        this._saveLikes(newState.myLikes);
+        return { ...newState };
+      } else {
         const newLikeObject = {
-          [ID]: {
-            id: ID,
-            isLikeClicked: false,
-            menuId: newId
+          [id]: {
+            menuId: id
           }
         };
         const newState = {
           ...prevState,
-          newId: "",
           myLikes: {
             ...prevState.myLikes,
             ...newLikeObject
           }
         };
+        this._saveLikes(newState.myLikes);
         return { ...newState };
-      });
-    }
-    const newLike = {
-      ids: ""
-    };
-  };
-
-  _likeClick = (menuId, b) => {
-    const originLikes = this.state.likes;
-    const joined = this.state.likes.concat(menuId);
-    if (this.state.likes.includes(menuId)) {
-      this.setState({ likes: originLikes.filter(num => num !== menuId) });
-      console.log("채워진 하트 클릭 : " + this.state.likes);
-      this._saveLikes(this.state.likes);
-    } else {
-      this.setState({ likes: joined });
-      console.log("빈 하트 클릭 : " + this.state.likes);
-      this._saveLikes(this.state.likes);
-    }
-
-    console.log(this.state.likes);
-    console.log(b);
-  };
-
-  _saveLikes = like => {
-    console.log("AsyncStorage에 저장할 값 : " + like.toString());
-    const saveLikes = AsyncStorage.setItem("like", like.toString());
-  };
-
-  // _loadLikes = async () => {
-  //   try {
-  //     const likes = await AsyncStorage.getItem("like");
-  //     const parsedLikes = likes.split(",");
-  //     this.setState({ likes: parsedLikes });
-  //     console.log("껄껄 : " + parsedLikes);
-  //     return likes;
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-  _loadLikes = () => {
-    this.setState({
-      loadedLikes: true
+      }
     });
+  };
+  _saveLikes = likes => {
+    const saveLikes = AsyncStorage.setItem("likes", JSON.stringify(likes));
+  };
+
+  _load = async () => {
+    try {
+      const likes = await AsyncStorage.getItem("likes");
+      const parsedToDos = JSON.parse(likes);
+      this.setState({ myLikes: parsedToDos || {} });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   render() {
-    const {
-      datas,
-      spinner,
-      isLikeClicked,
-      likes,
-      loadedLikes,
-      ids
-    } = this.state;
-    if (!loadedLikes) {
-      return <AppLoading />;
-    }
-    console.log("=====================");
-    //console.log(datas);
-    console.log("=========##==========");
+    const { spinner } = this.state;
     const menuList = this.state.datas.map((ele, index) =>
       Platform.OS === "android" ? (
         <Tab
@@ -171,9 +115,7 @@ export class Menu extends Component {
           <ChildTab
             menu={ele.menu}
             func={this._likeClick}
-            fucking={this._toggleComplete}
-            isLikeClicked={this.isLikeClicked}
-            likes={this.state.likes}
+            myLikes={this.state.myLikes}
           />
         </Tab>
       ) : (
@@ -188,9 +130,7 @@ export class Menu extends Component {
           <ChildTab
             menu={ele.menu}
             func={this._likeClick}
-            fucking={this._toggleComplete}
-            isLikeClicked={isLikeClicked}
-            likes={this.state.likes}
+            myLikes={this.state.myLikes}
           />
         </Tab>
       )

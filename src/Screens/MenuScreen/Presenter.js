@@ -6,8 +6,7 @@ import {
   ListItem,
   Left,
   Right,
-  Body,
-  Icon
+  Body
 } from "native-base";
 import SvgUri from "react-native-svg-uri";
 import PropTypes from "prop-types";
@@ -22,26 +21,19 @@ const deviceWidth = Dimensions.get("window").width;
 
 const ChildTab = props => {
   const _likeClick = props.func;
-  const _toggleComplete = props.fucking;
-  const isLikeClicked = props.isLikeClicked;
-  const likes = props.likes;
+  const myLikes = props.myLikes;
 
   const menuListItem = props.menu.map((ele, index) => (
     <MenuItem
       key={index}
-      num={index}
       id={ele.id}
       image={ele.image}
       name={ele.name}
       price={ele.price}
       _likeClick={_likeClick}
-      isLikeClicked={isLikeClicked}
-      likes={likes}
-      _toggleComplete={_toggleComplete}
+      myLikes={myLikes}
     />
   ));
-  console.log("pre : " + likes);
-  console.log(props.likes);
 
   return (
     <Container>
@@ -56,16 +48,9 @@ const MenuItem = props => {
   return (
     <ListItem style={styles.container}>
       <Left style={styles.left}>
-        <TouchableOpacity onPress={() => props._toggleComplete()}>
+        <TouchableOpacity onPress={() => props._likeClick(props.id)}>
           <View>
-            <SvgUri
-              source={
-                props.isLikeClicked
-                  ? //props.likes.includes(props.id.toString())
-                    fillHeart
-                  : emptyHeart
-              }
-            />
+            <SvgUri source={props.myLikes[props.id] ? fillHeart : emptyHeart} />
           </View>
         </TouchableOpacity>
       </Left>
