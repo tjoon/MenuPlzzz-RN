@@ -9,7 +9,13 @@ import {
 import PropTypes from "prop-types";
 
 import React, { Component } from "react";
-import { View, TouchableOpacity, Platform, StyleSheet } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Platform,
+  StyleSheet,
+  AsyncStorage
+} from "react-native";
 import Spinner from "react-native-loading-spinner-overlay";
 
 import { Actions } from "react-native-router-flux";
@@ -21,7 +27,6 @@ import ChildTab from "./Presenter";
 import { Ionicons } from "@expo/vector-icons";
 
 import SvgUri from "react-native-svg-uri";
-import { stringify } from "qs";
 
 export class Menu extends Component {
   constructor(props) {
@@ -30,14 +35,13 @@ export class Menu extends Component {
     this.state = {
       datas: [],
       spinner: true,
-      likes: [],
-      isLikeClicked: {}
+      myLikes: {}
     };
   }
 
   componentDidMount() {
-    console.log(this.props.store_id);
     this.getMenuApiAsync();
+    this._load();
   }
 
   getMenuApiAsync = () => {
@@ -46,30 +50,57 @@ export class Menu extends Component {
       .then(responseJson => {
         this.setState({
           datas: responseJson,
-          spinner: false,
-          isLikeClicked: false
+          spinner: false
         });
       });
   };
 
-  _likeClick = (a, b) => {
-    const originLikes = this.state.likes;
-    const joined = this.state.likes.concat(a);
-    if (this.state.likes.includes(a)) {
-      this.setState({ likes: originLikes.filter(num => num !== a) });
-    } else {
-      this.setState({ likes: joined });
-    }
+  _likeClick = id => {
+    this.setState(prevState => {
+      const myLikes = prevState.myLikes;
+      if (myLikes[id]) {
+        delete myLikes[id];
+        const newState = {
+          ...prevState,
+          ...myLikes
+        };
 
-    console.log(this.state.likes);
-    console.log(b);
+        this._saveLikes(newState.myLikes);
+        return { ...newState };
+      } else {
+        const newLikeObject = {
+          [id]: {
+            menuId: id
+          }
+        };
+        const newState = {
+          ...prevState,
+          myLikes: {
+            ...prevState.myLikes,
+            ...newLikeObject
+          }
+        };
+        this._saveLikes(newState.myLikes);
+        return { ...newState };
+      }
+    });
+  };
+  _saveLikes = likes => {
+    const saveLikes = AsyncStorage.setItem("likes", JSON.stringify(likes));
+  };
+
+  _load = async () => {
+    try {
+      const likes = await AsyncStorage.getItem("likes");
+      const parsedMyLikes = JSON.parse(likes);
+      this.setState({ myLikes: parsedMyLikes || {} });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   render() {
-    const { datas, spinner, isLikeClicked, likes } = this.state;
-    console.log("=====================");
-    //console.log(datas);
-    console.log("=========##==========");
+    const { spinner } = this.state;
     const menuList = this.state.datas.map((ele, index) =>
       Platform.OS === "android" ? (
         <Tab
@@ -84,8 +115,7 @@ export class Menu extends Component {
           <ChildTab
             menu={ele.menu}
             func={this._likeClick}
-            isLikeClicked={this.isLikeClicked}
-            likes={this.state.likes}
+            myLikes={this.state.myLikes}
           />
         </Tab>
       ) : (
@@ -100,8 +130,7 @@ export class Menu extends Component {
           <ChildTab
             menu={ele.menu}
             func={this._likeClick}
-            isLikeClicked={isLikeClicked}
-            likes={this.state.likes}
+            myLikes={this.state.myLikes}
           />
         </Tab>
       )
