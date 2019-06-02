@@ -51,17 +51,10 @@ class Search extends Component {
   };
 
   render() {
-    //console.log(this.props);
-    // const datas = this.props._datas;
     const store = this.props._store;
     const { spinner, search } = this.state;
     var searchResult = this.getSearchResult(search);
     const menuList = <ChildTab menu={searchResult} />;
-    // searchResult.map(ele => {
-    //   // console.log(ele);
-    //   // console.log("******************");
-    //   // <ChildTab menu={ele} />;
-    // });
     return (
       <Container>
         <Spinner

@@ -37,7 +37,6 @@ const ChildTab = props => {
       likes={likes}
     />
   ));
-  console.log(likes);
 
   return (
     <Container>

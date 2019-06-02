@@ -15,8 +15,6 @@ import ImageLoad from "react-native-image-placeholder";
 const deviceWidth = Dimensions.get("window").width;
 
 const ChildTab = props => {
-  console.log("search presenter");
-  console.log(props);
   const menuListItem = props.menu.map((ele, index) => (
     <MenuItem key={index} image={ele.image} name={ele.name} price={ele.price} />
   ));

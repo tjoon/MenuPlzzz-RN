@@ -58,7 +58,6 @@ class Home extends Component {
       );
     }
 
-    console.log(spinner);
     return (
       <React.Fragment>
         <Spinner

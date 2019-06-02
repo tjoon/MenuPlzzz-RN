@@ -67,13 +67,10 @@ export class Menu extends Component {
       }
     }
 
-    console.log(target);
     this.setState({ slideAnimationDialog: visible, random: target });
   }
 
   componentDidMount() {
-    console.log(this.props);
-    console.log(this.props.store_id);
     this.getMenuApiAsync();
   }
 
@@ -97,16 +94,10 @@ export class Menu extends Component {
     } else {
       this.setState({ likes: joined });
     }
-
-    console.log(this.state.likes);
-    console.log(b);
   };
 
   render() {
     const { datas, spinner, isLikeClicked, likes } = this.state;
-    console.log("=====================");
-    //console.log(datas);
-    console.log("=========##==========");
     const menuList = this.state.datas.map((ele, index) =>
       Platform.OS === "android" ? (
         <Tab
