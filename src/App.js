@@ -6,6 +6,7 @@ import { Font } from "expo";
 
 import { Home } from "./Screens/HomeScreen";
 import { Menu } from "./Screens/MenuScreen/index";
+import { Search } from "./Screens/SearchScreen/index";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -56,6 +57,12 @@ export default class App extends React.Component {
             component={Home}
             title="Home"
             initial={true}
+            hideNavBar={true}
+          />
+          <Scene
+            key="search"
+            component={Search}
+            title="Search"
             hideNavBar={true}
           />
         </Stack>

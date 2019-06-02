@@ -11,11 +11,21 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import {
   View,
+  Image,
   TouchableOpacity,
   Platform,
   StyleSheet,
   AsyncStorage
 } from "react-native";
+import Dialog, {
+  DialogTitle,
+  DialogContent,
+  DialogFooter,
+  DialogButton,
+  SlideAnimation,
+  ScaleAnimation
+} from "react-native-popup-dialog";
+
 import Spinner from "react-native-loading-spinner-overlay";
 
 import { Actions } from "react-native-router-flux";
@@ -35,8 +45,29 @@ export class Menu extends Component {
     this.state = {
       datas: [],
       spinner: true,
-      myLikes: {}
+      myLikes: {},
+      slideAnimationDialog: false,
+      random: []
     };
+  }
+
+  setRandomVisible(visible) {
+    let target;
+    if (this.state.datas.length > 0) {
+      const ran1 = Math.floor(Math.random() * this.state.datas.length);
+
+      if (this.state.datas[ran1] !== null) {
+        const ran2 = Math.floor(
+          Math.random() * this.state.datas[ran1].menu.length
+        );
+
+        if (this.state.datas[ran1].menu[ran2] !== null) {
+          target = this.state.datas[ran1].menu[ran2];
+        }
+      }
+    }
+
+    this.setState({ slideAnimationDialog: visible, random: target });
   }
 
   componentDidMount() {
@@ -100,7 +131,7 @@ export class Menu extends Component {
   };
 
   render() {
-    const { spinner } = this.state;
+    const { datas, spinner } = this.state;
     const menuList = this.state.datas.map((ele, index) =>
       Platform.OS === "android" ? (
         <Tab
@@ -152,13 +183,13 @@ export class Menu extends Component {
           >
             <Ionicons name="ios-arrow-back" size={30} />
           </TouchableOpacity>
-          <View style={{ marginBottom: 5, alignItems: "center" }}>
+          <View style={{ marginBottom: 5 }}>
             <Text style={{ fontSize: 22, fontWeight: "bold" }}>{store}</Text>
           </View>
 
           <TouchableOpacity
             onPress={() => {
-              //Actions.pop();
+              Actions.push("search", { _datas: datas, _store: store });
             }}
           >
             <SvgUri
@@ -187,27 +218,72 @@ export class Menu extends Component {
           {menuList}
         </Tabs>
 
+        <Dialog
+          onDismiss={() => {
+            this.setState({ slideAnimationDialog: false });
+          }}
+          onTouchOutside={() => {
+            this.setState({ slideAnimationDialog: false });
+          }}
+          onHardwareBackPress={() => {
+            this.setState({ slideAnimationDialog: false });
+          }}
+          visible={this.state.slideAnimationDialog}
+          //dialogTitle={<DialogTitle title="Popup Dialog - Slide Animation" />}
+          dialogAnimation={new SlideAnimation({ slideFrom: "bottom" })}
+        >
+          <DialogContent>
+            <Image
+              source={{
+                uri: this.state.random.image
+                //"https://www.mcdelivery.co.kr/kr/static/1556153387275/assets/82/products/1201.png?"
+              }}
+              style={{ width: 300, height: 300 }}
+              resizeMode="contain"
+            />
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "row"
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  textAlign: "right",
+                  marginTop: 15,
+                  fontWeight: "bold"
+                }}
+              >
+                {this.state.random.name}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 18,
+                  textAlign: "left",
+                  marginTop: 15
+                }}
+              >
+                는 어떠세요?
+              </Text>
+            </View>
+            <TouchableOpacity style={styles.recommendButtonStyle}>
+              <Text style={styles.randomTextStyle}>자세히 보기</Text>
+            </TouchableOpacity>
+          </DialogContent>
+        </Dialog>
+
         <TouchableOpacity
-          style={{
-            backgroundColor: "#444444",
-            flex: 0.12,
-            justifyContent: "center",
-            alignItems: "center"
+          style={styles.randomButtonStyle}
+          onPress={() => {
+            this.setRandomVisible(true);
+            // this.setState({
+            //   slideAnimationDialog: true
+            // });
           }}
         >
-          <Text
-            style={{
-              fontFamily: "PlayfairDisplay-Black",
-              fontSize: 20,
-              fontWeight: "bold",
-              fontStyle: "normal",
-              letterSpacing: 0.01,
-              textAlign: "center",
-              color: "#ffffff"
-            }}
-          >
-            랜덤 선택
-          </Text>
+          <Text style={styles.randomTextStyle}>랜덤 선택</Text>
         </TouchableOpacity>
       </Container>
     );
@@ -217,6 +293,30 @@ export class Menu extends Component {
 const styles = StyleSheet.create({
   spinnerTextStyle: {
     color: "#FFF"
+  },
+  randomTextStyle: {
+    fontFamily: "PlayfairDisplay-Black",
+    fontSize: 20,
+    fontWeight: "bold",
+    fontStyle: "normal",
+    letterSpacing: 0.01,
+    textAlign: "center",
+    color: "#ffffff"
+  },
+  randomButtonStyle: {
+    backgroundColor: "#444444",
+    flex: 0.12,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  recommendButtonStyle: {
+    backgroundColor: "#ff774f",
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 15,
+    marginRight: 30,
+    marginLeft: 30
   }
 });
 
