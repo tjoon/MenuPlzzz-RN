@@ -92,8 +92,8 @@ export class Menu extends Component {
   _load = async () => {
     try {
       const likes = await AsyncStorage.getItem("likes");
-      const parsedToDos = JSON.parse(likes);
-      this.setState({ myLikes: parsedToDos || {} });
+      const parsedMyLikes = JSON.parse(likes);
+      this.setState({ myLikes: parsedMyLikes || {} });
     } catch (err) {
       console.log(err);
     }
