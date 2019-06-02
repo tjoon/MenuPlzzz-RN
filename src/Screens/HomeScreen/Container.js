@@ -77,11 +77,12 @@ class Home extends Component {
             }
           ]}
         >
-          {/* <Image
-            style={{ width: 140, height: 40 }}
-            source={require("../../assets/images/logo_menuplzzz.png")}
-          /> */}
-          <Svg
+          <Image
+            //style={{ width: 100, height: 20 }}
+            source={require("../../assets/images/menu_plzzz_logo.png")}
+            resizeMode={"cover"}
+          />
+          {/* <Svg
             xmlns="http://www.w3.org/2000/svg"
             width="258"
             height="60"
@@ -99,7 +100,7 @@ class Home extends Component {
                 Menu Plzzz
               </Svg.TSpan>
             </Svg.Text>
-          </Svg>
+          </Svg> */}
         </View>
         <StoreList items={items} />
       </React.Fragment>
