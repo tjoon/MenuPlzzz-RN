@@ -1,7 +1,14 @@
 import { AppLoading, Font, Svg } from "expo";
 
 import React, { Component } from "react";
-import { View, Image, StatusBar, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  StatusBar,
+  StyleSheet,
+  TouchableOpacity,
+  Text
+} from "react-native";
 
 import Spinner from "react-native-loading-spinner-overlay";
 
@@ -11,6 +18,7 @@ import { layout } from "../../Styles/layout";
 import StoreList from "./Presenter";
 
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Actions } from "react-native-router-flux";
 
 class Home extends Component {
   constructor(props) {
@@ -66,40 +74,26 @@ class Home extends Component {
           textStyle={styles.spinnerTextStyle}
         />
         <StatusBar backgroundColor="rgba(0,0,0,0.24)" animated />
-        <View
-          style={[
-            layout.navBar,
-            {
-              justifyContent: "center",
-              alignItems: "flex-end",
-              paddingTop: 20
-            }
-          ]}
-        >
+        <View style={[layout.navBar]}>
           <Image
-            //style={{ width: 100, height: 20 }}
+            source={require("../../assets/images/likesButton.png")}
+            resizeMode={"cover"}
+          />
+          <Image
             source={require("../../assets/images/menu_plzzz_logo.png")}
             resizeMode={"cover"}
           />
-          {/* <Svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="258"
-            height="60"
-            viewBox="0 0 128 20"
+          <TouchableOpacity
+            onPress={() => {
+              Actions.push("likes");
+            }}
           >
-            <Svg.Text
-              fill="#000"
-              fill-rule="evenodd"
-              font-family="PlayfairDisplay-Black"
-              font-size="24"
-              font-weight="700"
-              transform="translate(-115 -60)"
-            >
-              <Svg.TSpan x="143" y="80">
-                Menu Plzzz
-              </Svg.TSpan>
-            </Svg.Text>
-          </Svg> */}
+            <Image
+              style={{ marginRight: 20 }}
+              source={require("../../assets/images/likesButton.png")}
+              resizeMode={"cover"}
+            />
+          </TouchableOpacity>
         </View>
         <StoreList items={items} />
       </React.Fragment>

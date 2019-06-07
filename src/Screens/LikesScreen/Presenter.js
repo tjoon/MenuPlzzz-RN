@@ -19,31 +19,15 @@ import detailArrow from "../../assets/images/detail_arrow.svg";
 
 const deviceWidth = Dimensions.get("window").width;
 
-const ChildTab = props => {
-  const _likeClick = props.func;
-  const myLikes = props.myLikes;
-
-  const menuListItem = props.menu.map((ele, index) => (
-    <MenuItem
-      key={index}
-      id={ele.id}
-      image={ele.image}
-      name={ele.name}
-      price={ele.price}
-      _likeClick={_likeClick}
-      myLikes={myLikes}
-    />
-  ));
-
+const LikesTab = props => {
   return (
     <Container>
       <Content>
-        <List>{menuListItem}</List>
+        <Text>{"hi"}</Text>
       </Content>
     </Container>
   );
 };
-
 const MenuItem = props => {
   return (
     <ListItem style={styles.container}>
@@ -81,35 +65,4 @@ const MenuItem = props => {
     </ListItem>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-
-  left: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  body: {
-    flex: 5,
-    flexDirection: "column"
-  },
-  right: {
-    flex: 1,
-    marginRight: 15
-  }
-});
-
-ChildTab.propTypes = {
-  menu: PropTypes.array
-};
-
-MenuItem.propTypes = {
-  image: PropTypes.string,
-  name: PropTypes.string,
-  price: PropTypes.string
-};
-
-export default ChildTab;
+export default LikesTab;

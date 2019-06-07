@@ -86,7 +86,7 @@ export class Menu extends Component {
       });
   };
 
-  _likeClick = id => {
+  _likeClick = (id, image, name, price) => {
     this.setState(prevState => {
       const myLikes = prevState.myLikes;
       if (myLikes[id]) {
@@ -101,7 +101,10 @@ export class Menu extends Component {
       } else {
         const newLikeObject = {
           [id]: {
-            menuId: id
+            menuId: id,
+            image: image,
+            name: name,
+            price: price
           }
         };
         const newState = {
@@ -112,6 +115,7 @@ export class Menu extends Component {
           }
         };
         this._saveLikes(newState.myLikes);
+
         return { ...newState };
       }
     });
@@ -132,6 +136,7 @@ export class Menu extends Component {
 
   render() {
     const { datas, spinner } = this.state;
+    console.log(this.state.myLikes);
     const menuList = this.state.datas.map((ele, index) =>
       Platform.OS === "android" ? (
         <Tab
