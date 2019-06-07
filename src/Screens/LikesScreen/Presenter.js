@@ -1,53 +1,30 @@
-import {
-  Container,
-  Content,
-  Text,
-  List,
-  ListItem,
-  Left,
-  Right,
-  Body
-} from "native-base";
-import SvgUri from "react-native-svg-uri";
-import PropTypes from "prop-types";
+import { Text, ListItem, Left, Right, Body } from "native-base";
 import React from "react";
-import { StyleSheet, Dimensions, TouchableOpacity, View } from "react-native";
+import { View, Dimensions, StyleSheet } from "react-native";
+
 import ImageLoad from "react-native-image-placeholder";
-import emptyHeart from "../../assets/images/empty_heart.svg";
-import fillHeart from "../../assets/images/fill_heart.svg";
+import SvgUri from "react-native-svg-uri";
+
 import detailArrow from "../../assets/images/detail_arrow.svg";
+
+import fillHeart from "../../assets/images/fill_heart.svg";
 
 const deviceWidth = Dimensions.get("window").width;
 
-const LikesTab = props => {
-  return (
-    <Container>
-      <Content>
-        <Text>{"hi"}</Text>
-      </Content>
-    </Container>
-  );
-};
-const MenuItem = props => {
+const LikeTab = props => {
   return (
     <ListItem style={styles.container}>
       <Left style={styles.left}>
-        <TouchableOpacity
-          onPress={() =>
-            props._likeClick(props.id, props.image, props.name, props.price)
-          }
-        >
-          <View>
-            <SvgUri source={props.myLikes[props.id] ? fillHeart : emptyHeart} />
-          </View>
-        </TouchableOpacity>
+        <View>
+          <SvgUri source={fillHeart} />
+        </View>
       </Left>
       <Left style={styles.left}>
         <ImageLoad
           style={{ width: deviceWidth * 0.12, height: deviceWidth * 0.12 }}
           loadingStyle={{ size: "large", color: "black" }}
           source={{
-            uri: props.image
+            uri: props.image,
           }}
         />
       </Left>
@@ -65,4 +42,22 @@ const MenuItem = props => {
     </ListItem>
   );
 };
-export default LikesTab;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+
+  left: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  body: {
+    flex: 5,
+    flexDirection: "column",
+    //marginLeft: 20,
+  },
+});
+
+export default LikeTab;
