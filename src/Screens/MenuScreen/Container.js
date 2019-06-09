@@ -21,7 +21,7 @@ import Spinner from "react-native-loading-spinner-overlay";
 
 import Dialog, {
   DialogContent,
-  SlideAnimation,
+  SlideAnimation
 } from "react-native-popup-dialog";
 
 import { Actions } from "react-native-router-flux";
@@ -132,41 +132,38 @@ export class Menu extends Component {
 
   render() {
     const { datas, spinner } = this.state;
-    console.log(this.state.myLikes);
-    const menuList = this.state.datas.map(
-      (ele, index) =>
-        Platform.OS === "android" ? (
-          <Tab
-            key={index}
-            // style={{ fontSize: 5 }}
-            heading={
-              <TabHeading style={{ backgroundColor: "#fcfcfc" }}>
-                <Text style={{ color: "black" }}>{ele.category}</Text>
-              </TabHeading>
-            }
-          >
-            <ChildTab
-              menu={ele.menu}
-              func={this._likeClick}
-              myLikes={this.state.myLikes}
-            />
-          </Tab>
-        ) : (
-          <Tab
-            key={index}
-            heading={
-              <TabHeading style={{ backgroundColor: "#fcfcfc" }}>
-                <Text style={{ color: "black" }}>{ele.category}</Text>
-              </TabHeading>
-            }
-          >
-            <ChildTab
-              menu={ele.menu}
-              func={this._likeClick}
-              myLikes={this.state.myLikes}
-            />
-          </Tab>
-        )
+    const menuList = this.state.datas.map((ele, index) =>
+      Platform.OS === "android" ? (
+        <Tab
+          key={index}
+          heading={
+            <TabHeading style={{ backgroundColor: "#fcfcfc" }}>
+              <Text style={{ color: "black" }}>{ele.category}</Text>
+            </TabHeading>
+          }
+        >
+          <ChildTab
+            menu={ele.menu}
+            func={this._likeClick}
+            myLikes={this.state.myLikes}
+          />
+        </Tab>
+      ) : (
+        <Tab
+          key={index}
+          heading={
+            <TabHeading style={{ backgroundColor: "#fcfcfc" }}>
+              <Text style={{ color: "black" }}>{ele.category}</Text>
+            </TabHeading>
+          }
+        >
+          <ChildTab
+            menu={ele.menu}
+            func={this._likeClick}
+            myLikes={this.state.myLikes}
+          />
+        </Tab>
+      )
     );
 
     const { store } = this.props;
@@ -183,7 +180,10 @@ export class Menu extends Component {
               Actions.pop();
             }}
           >
-            <Ionicons name="ios-arrow-back" size={30} />
+            <Image
+              style={{ marginLeft: 10 }}
+              source={require("../../assets/images/back_arrow.png")}
+            />
           </TouchableOpacity>
           <View style={{ marginBottom: 5 }}>
             <Text style={{ fontSize: 22, fontWeight: "bold" }}>{store}</Text>
@@ -194,9 +194,9 @@ export class Menu extends Component {
               Actions.push("search", { _datas: datas, _store: store });
             }}
           >
-            <SvgUri
-              style={{ marginRight: 10 }}
-              source={require("../../assets/images/finder.svg")}
+            <Image
+              style={{ marginRight: 20 }}
+              source={require("../../assets/images/finder.png")}
             />
           </TouchableOpacity>
           {/* <View style={{ flex: 0.1 }} /> */}
