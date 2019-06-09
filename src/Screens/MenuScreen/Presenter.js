@@ -11,10 +11,16 @@ import {
 import SvgUri from "react-native-svg-uri";
 import PropTypes from "prop-types";
 import React from "react";
-import { StyleSheet, Dimensions, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  View,
+  Image
+} from "react-native";
 import ImageLoad from "react-native-image-placeholder";
-import emptyHeart from "../../assets/images/empty_heart.svg";
-import fillHeart from "../../assets/images/fill_heart.svg";
+import emptyHeart from "../../assets/images/empty_heart.png";
+import fillHeart from "../../assets/images/fill_heart.png";
 import detailArrow from "../../assets/images/detail_arrow.svg";
 
 const deviceWidth = Dimensions.get("window").width;
@@ -50,7 +56,14 @@ const MenuItem = props => {
       <Left style={styles.left}>
         <TouchableOpacity onPress={() => props._likeClick(props.id)}>
           <View>
-            <SvgUri source={props.myLikes[props.id] ? fillHeart : emptyHeart} />
+            {/* <SvgUri source={props.myLikes[props.id] ? fillHeart : emptyHeart} /> */}
+            <Image
+              source={
+                props.myLikes[props.id]
+                  ? require("../../assets/images/fill_heart.png")
+                  : require("../../assets/images/empty_heart.png")
+              }
+            />
           </View>
         </TouchableOpacity>
       </Left>
@@ -71,7 +84,8 @@ const MenuItem = props => {
       </Body>
       <Right>
         <View>
-          <SvgUri source={detailArrow} />
+          {/* <SvgUri source={detailArrow} /> */}
+          <Image source={require("../../assets/images/detail_arrow.png")} />
         </View>
       </Right>
     </ListItem>

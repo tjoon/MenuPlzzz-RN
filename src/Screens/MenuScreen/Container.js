@@ -18,12 +18,8 @@ import {
   AsyncStorage
 } from "react-native";
 import Dialog, {
-  DialogTitle,
   DialogContent,
-  DialogFooter,
-  DialogButton,
-  SlideAnimation,
-  ScaleAnimation
+  SlideAnimation
 } from "react-native-popup-dialog";
 
 import Spinner from "react-native-loading-spinner-overlay";
@@ -136,7 +132,6 @@ export class Menu extends Component {
       Platform.OS === "android" ? (
         <Tab
           key={index}
-          // style={{ fontSize: 5 }}
           heading={
             <TabHeading style={{ backgroundColor: "#fcfcfc" }}>
               <Text style={{ color: "black" }}>{ele.category}</Text>
@@ -181,7 +176,10 @@ export class Menu extends Component {
               Actions.pop();
             }}
           >
-            <Ionicons name="ios-arrow-back" size={30} />
+            <Image
+              style={{ marginLeft: 10 }}
+              source={require("../../assets/images/back_arrow.png")}
+            />
           </TouchableOpacity>
           <View style={{ marginBottom: 5 }}>
             <Text style={{ fontSize: 22, fontWeight: "bold" }}>{store}</Text>
@@ -192,9 +190,9 @@ export class Menu extends Component {
               Actions.push("search", { _datas: datas, _store: store });
             }}
           >
-            <SvgUri
-              style={{ marginRight: 10 }}
-              source={require("../../assets/images/finder.svg")}
+            <Image
+              style={{ marginRight: 20 }}
+              source={require("../../assets/images/finder.png")}
             />
           </TouchableOpacity>
           {/* <View style={{ flex: 0.1 }} /> */}
