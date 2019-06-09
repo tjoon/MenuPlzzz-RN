@@ -6,17 +6,17 @@ import {
   View,
   StyleSheet,
   AsyncStorage,
+  Image
 } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { layout } from "../../Styles/layout";
 import LikeTab from "./Presenter";
-import { Ionicons } from "@expo/vector-icons";
 
 class Likes extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      myLikes: {},
+      myLikes: {}
     };
   }
 
@@ -49,7 +49,10 @@ class Likes extends Component {
               Actions.pop();
             }}
           >
-            <Ionicons name="ios-arrow-back" size={30} />
+            <Image
+              style={{ marginLeft: 10 }}
+              source={require("../../assets/images/back_arrow.png")}
+            />
           </TouchableOpacity>
           <View style={{ marginBottom: 5 }}>
             <Text style={{ fontSize: 22, fontWeight: "bold" }}>최애 메뉴</Text>
@@ -66,8 +69,8 @@ class Likes extends Component {
 
 const styles = StyleSheet.create({
   spinnerTextStyle: {
-    color: "#FFF",
-  },
+    color: "#FFF"
+  }
 });
 
 export default Likes;
