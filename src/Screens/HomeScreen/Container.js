@@ -102,25 +102,6 @@ class Home extends Component {
             source={require("../../assets/images/menu_plzzz_logo.png")}
             resizeMode={"cover"}
           />
-          {/* <Svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="258"
-            height="60"
-            viewBox="0 0 128 20"
-          >
-            <Svg.Text
-              fill="#000"
-              fill-rule="evenodd"
-              font-family="PlayfairDisplay-Black"
-              font-size="24"
-              font-weight="700"
-              transform="translate(-115 -60)"
-            >
-              <Svg.TSpan x="143" y="80">
-                Menu Plzzz
-              </Svg.TSpan>
-            </Svg.Text>
-          </Svg> */}
         </View>
         <View style={{ flex: 1 }}>
           <View style={[styles.swipeContainer]}>
