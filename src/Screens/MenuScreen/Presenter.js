@@ -54,7 +54,11 @@ const MenuItem = props => {
   return (
     <ListItem style={styles.container}>
       <Left style={styles.left}>
-        <TouchableOpacity onPress={() => props._likeClick(props.id)}>
+        <TouchableOpacity
+          onPress={() =>
+            props._likeClick(props.id, props.image, props.name, props.price)
+          }
+        >
           <View>
             {/* <SvgUri source={props.myLikes[props.id] ? fillHeart : emptyHeart} /> */}
             <Image
