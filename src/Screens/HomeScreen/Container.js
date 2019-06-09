@@ -6,10 +6,12 @@ import {
   Image,
   StatusBar,
   StyleSheet,
-  TouchableOpacity,
+  TouchableOpacity
 } from "react-native";
 
 import Spinner from "react-native-loading-spinner-overlay";
+
+import { Actions } from "react-native-router-flux";
 
 import SwiperFlatList from "react-native-swiper-flatlist";
 
@@ -37,8 +39,8 @@ class Home extends Component {
         "http://www.mcdonalds.co.kr/uploadFolder/banner/banner_201906070330434080.jpg?timestamp=1559985327696",
         "http://www.mcdonalds.co.kr/uploadFolder/banner/banner_201906040801014110.jpg",
         "http://www.mcdonalds.co.kr/uploadFolder/banner/banner_201906040739140260.jpg",
-        "http://www.mcdonalds.co.kr/uploadFolder/banner/banner_201905301256117210.jpg",
-      ],
+        "http://www.mcdonalds.co.kr/uploadFolder/banner/banner_201905301256117210.jpg"
+      ]
     };
   }
 
@@ -52,7 +54,7 @@ class Home extends Component {
       .then(responseJson => {
         this.setState({
           items: responseJson,
-          spinner: false,
+          spinner: false
         });
       });
   };
@@ -74,11 +76,11 @@ class Home extends Component {
       <View key={index} style={[styles.child, { backgroundColor: "#ff5000" }]}>
         <Image
           source={{
-            uri: url,
+            uri: url
           }}
           style={{
             width: deviceHeight,
-            height: deviceHeight * 0.6,
+            height: deviceHeight * 0.6
           }}
         />
       </View>
@@ -92,21 +94,26 @@ class Home extends Component {
           textStyle={styles.spinnerTextStyle}
         />
         <StatusBar backgroundColor="rgba(0,0,0,0.24)" animated />
-        <View
-          style={[
-            layout.navBar,
-            {
-              justifyContent: "center",
-              alignItems: "flex-end",
-              paddingTop: 20,
-            },
-          ]}
-        >
-          <Image
-            //style={{ width: 100, height: 20 }}
-            source={require("../../assets/images/menu_plzzz_logo.png")}
-            resizeMode={"cover"}
-          />
+        <View style={[layout.navBar]}>
+          <View style={{ flex: 0.2 }} />
+          <View>
+            <Image
+              //style={{ width: 100, height: 20 }}
+              source={require("../../assets/images/menu_plzzz_logo.png")}
+              resizeMode={"cover"}
+            />
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              Actions.push("likes");
+            }}
+          >
+            <Image
+              style={{ marginRight: 20 }}
+              source={require("../../assets/images/likesButton.png")}
+              resizeMode={"cover"}
+            />
+          </TouchableOpacity>
         </View>
         <View style={{ flex: 1 }}>
           <View style={[styles.swipeContainer]}>
@@ -130,8 +137,8 @@ class Home extends Component {
       //Asset.loadAsync([require("../../assets/images/icon.png")]),
       Font.loadAsync({
         ...Ionicons.font,
-        ...MaterialIcons.font,
-      }),
+        ...MaterialIcons.font
+      })
     ]);
   };
 
@@ -141,24 +148,24 @@ class Home extends Component {
 
   _handleFinishLoading = async () => {
     this.setState({
-      isLoadingComplete: true,
+      isLoadingComplete: true
     });
   };
 }
 
 const styles = StyleSheet.create({
   spinnerTextStyle: {
-    color: "#FFF",
+    color: "#FFF"
   },
   swipeContainer: {
     backgroundColor: "white",
-    paddingTop: 10,
+    paddingTop: 10
   },
   child: {
     height: deviceHeight * 0.6,
     width: deviceWidth,
-    justifyContent: "center",
-  },
+    justifyContent: "center"
+  }
 });
 
 export default Home;
