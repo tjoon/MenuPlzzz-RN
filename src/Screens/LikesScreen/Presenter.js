@@ -1,4 +1,4 @@
-import { Text, ListItem, Left, Right, Body } from "native-base";
+import { Text, Left, Right, Body, ListItem } from "native-base";
 import React from "react";
 import { View, Dimensions, StyleSheet } from "react-native";
 
@@ -24,7 +24,7 @@ const LikeTab = props => {
           style={{ width: deviceWidth * 0.12, height: deviceWidth * 0.12 }}
           loadingStyle={{ size: "large", color: "black" }}
           source={{
-            uri: props.image,
+            uri: props.image
           }}
         />
       </Left>
@@ -45,19 +45,18 @@ const LikeTab = props => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
 
   left: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
   body: {
     flex: 5,
-    flexDirection: "column",
-    //marginLeft: 20,
-  },
+    flexDirection: "column"
+  }
 });
 
 export default LikeTab;
