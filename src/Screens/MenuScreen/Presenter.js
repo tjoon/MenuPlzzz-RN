@@ -8,7 +8,6 @@ import {
   Right,
   Body
 } from "native-base";
-import SvgUri from "react-native-svg-uri";
 import PropTypes from "prop-types";
 import React from "react";
 import {
@@ -19,9 +18,6 @@ import {
   Image
 } from "react-native";
 import ImageLoad from "react-native-image-placeholder";
-import emptyHeart from "../../assets/images/empty_heart.png";
-import fillHeart from "../../assets/images/fill_heart.png";
-import detailArrow from "../../assets/images/detail_arrow.svg";
 
 const deviceWidth = Dimensions.get("window").width;
 

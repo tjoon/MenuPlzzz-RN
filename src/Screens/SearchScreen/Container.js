@@ -1,7 +1,5 @@
 import { Container, Text, Content } from "native-base";
 
-import { Svg } from "expo";
-
 import React, { Component } from "react";
 import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
 
@@ -9,8 +7,6 @@ import { Actions } from "react-native-router-flux";
 
 import Spinner from "react-native-loading-spinner-overlay";
 import { layout } from "../../Styles/layout";
-import { Ionicons } from "@expo/vector-icons";
-import SvgUri from "react-native-svg-uri";
 
 import { SearchBar } from "react-native-elements";
 import ChildTab from "./Presenter";
@@ -87,10 +83,9 @@ class Search extends Component {
           }}
         >
           <SearchBar
-            placeholder="메뉴명 입력"
+            placeholder="메뉴명 검색"
             onChangeText={this.updateSearch}
             value={search}
-            // lightTheme={false}
             containerStyle={{
               backgroundColor: "white",
               borderBottomColor: "#ff774f",
@@ -98,8 +93,6 @@ class Search extends Component {
             }}
             inputContainerStyle={{ backgroundColor: "white" }}
             inputStyle={{ color: "black" }}
-            // searchIcon={null}
-            // rightIconContainerStyle={{ marginRight: 5 }}
           />
         </View>
 
