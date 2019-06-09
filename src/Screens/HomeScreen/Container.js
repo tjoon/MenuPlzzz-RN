@@ -28,7 +28,7 @@ class Home extends Component {
       isLoadingComplete: false,
       spinner: true,
 
-      items: []
+      items: [],
 
       imageList: [
         "http://www.mcdonalds.co.kr/uploadFolder/banner/banner_201906070330434080.jpg?timestamp=1559985327696",
@@ -36,7 +36,6 @@ class Home extends Component {
         "http://www.mcdonalds.co.kr/uploadFolder/banner/banner_201906040739140260.jpg",
         "http://www.mcdonalds.co.kr/uploadFolder/banner/banner_201905301256117210.jpg"
       ]
-
     };
   }
 
@@ -152,7 +151,6 @@ class Home extends Component {
 const styles = StyleSheet.create({
   spinnerTextStyle: {
     color: "#FFF"
-
   },
   swipeContainer: {
     backgroundColor: "white",
@@ -162,7 +160,6 @@ const styles = StyleSheet.create({
     height: deviceHeight * 0.6,
     width: deviceWidth,
     justifyContent: "center"
-
   }
 });
 
