@@ -8,7 +8,6 @@ import {
   Right,
   Body
 } from "native-base";
-import SvgUri from "react-native-svg-uri";
 import PropTypes from "prop-types";
 import React from "react";
 import {
@@ -19,9 +18,6 @@ import {
   Image
 } from "react-native";
 import ImageLoad from "react-native-image-placeholder";
-import emptyHeart from "../../assets/images/empty_heart.svg";
-import fillHeart from "../../assets/images/fill_heart.svg";
-import detailArrow from "../../assets/images/detail_arrow.svg";
 
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height;
@@ -61,7 +57,14 @@ const MenuItem = props => {
           }
         >
           <View>
-            <SvgUri source={props.myLikes[props.id] ? fillHeart : emptyHeart} />
+            {/* <SvgUri source={props.myLikes[props.id] ? fillHeart : emptyHeart} /> */}
+            <Image
+              source={
+                props.myLikes[props.id]
+                  ? require("../../assets/images/fill_heart.png")
+                  : require("../../assets/images/empty_heart.png")
+              }
+            />
           </View>
         </TouchableOpacity>
       </Left>
@@ -93,7 +96,8 @@ const MenuItem = props => {
       </Body>
       <Right>
         <View>
-          <SvgUri source={detailArrow} />
+          {/* <SvgUri source={detailArrow} /> */}
+          <Image source={require("../../assets/images/detail_arrow.png")} />
         </View>
       </Right>
     </ListItem>

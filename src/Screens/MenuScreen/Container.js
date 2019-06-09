@@ -4,7 +4,7 @@ import {
   Tabs,
   TabHeading,
   ScrollableTab,
-  Text,
+  Text
 } from "native-base";
 import PropTypes from "prop-types";
 
@@ -15,24 +15,19 @@ import {
   TouchableOpacity,
   Platform,
   StyleSheet,
-  AsyncStorage,
+  AsyncStorage
 } from "react-native";
 import Spinner from "react-native-loading-spinner-overlay";
 
 import Dialog, {
   DialogContent,
-  SlideAnimation,
+  SlideAnimation
 } from "react-native-popup-dialog";
 
 import { Actions } from "react-native-router-flux";
-import SvgUri from "react-native-svg-uri";
-
 import { IP_ADDRESS } from "../../Service/service";
 import { layout } from "../../Styles/layout";
-
 import ChildTab from "./Presenter";
-
-import { Ionicons } from "@expo/vector-icons";
 
 export class Menu extends Component {
   constructor(props) {
@@ -43,7 +38,7 @@ export class Menu extends Component {
       spinner: true,
       myLikes: {},
       slideAnimationDialog: false,
-      random: [],
+      random: []
     };
   }
 
@@ -77,7 +72,7 @@ export class Menu extends Component {
       .then(responseJson => {
         this.setState({
           datas: responseJson,
-          spinner: false,
+          spinner: false
         });
       });
   };
@@ -89,7 +84,7 @@ export class Menu extends Component {
         delete myLikes[id];
         const newState = {
           ...prevState,
-          ...myLikes,
+          ...myLikes
         };
 
         this._saveLikes(newState.myLikes);
@@ -100,15 +95,15 @@ export class Menu extends Component {
             menuId: id,
             image: image,
             name: name,
-            price: price,
-          },
+            price: price
+          }
         };
         const newState = {
           ...prevState,
           myLikes: {
             ...prevState.myLikes,
-            ...newLikeObject,
-          },
+            ...newLikeObject
+          }
         };
         this._saveLikes(newState.myLikes);
 
@@ -132,41 +127,38 @@ export class Menu extends Component {
 
   render() {
     const { datas, spinner } = this.state;
-    console.log(this.state.myLikes);
-    const menuList = this.state.datas.map(
-      (ele, index) =>
-        Platform.OS === "android" ? (
-          <Tab
-            key={index}
-            // style={{ fontSize: 5 }}
-            heading={
-              <TabHeading style={{ backgroundColor: "#fcfcfc" }}>
-                <Text style={{ color: "black" }}>{ele.category}</Text>
-              </TabHeading>
-            }
-          >
-            <ChildTab
-              menu={ele.menu}
-              func={this._likeClick}
-              myLikes={this.state.myLikes}
-            />
-          </Tab>
-        ) : (
-          <Tab
-            key={index}
-            heading={
-              <TabHeading style={{ backgroundColor: "#fcfcfc" }}>
-                <Text style={{ color: "black" }}>{ele.category}</Text>
-              </TabHeading>
-            }
-          >
-            <ChildTab
-              menu={ele.menu}
-              func={this._likeClick}
-              myLikes={this.state.myLikes}
-            />
-          </Tab>
-        )
+    const menuList = this.state.datas.map((ele, index) =>
+      Platform.OS === "android" ? (
+        <Tab
+          key={index}
+          heading={
+            <TabHeading style={{ backgroundColor: "#fcfcfc" }}>
+              <Text style={{ color: "black" }}>{ele.category}</Text>
+            </TabHeading>
+          }
+        >
+          <ChildTab
+            menu={ele.menu}
+            func={this._likeClick}
+            myLikes={this.state.myLikes}
+          />
+        </Tab>
+      ) : (
+        <Tab
+          key={index}
+          heading={
+            <TabHeading style={{ backgroundColor: "#fcfcfc" }}>
+              <Text style={{ color: "black" }}>{ele.category}</Text>
+            </TabHeading>
+          }
+        >
+          <ChildTab
+            menu={ele.menu}
+            func={this._likeClick}
+            myLikes={this.state.myLikes}
+          />
+        </Tab>
+      )
     );
 
     const { store } = this.props;
@@ -183,7 +175,10 @@ export class Menu extends Component {
               Actions.pop();
             }}
           >
-            <Ionicons name="ios-arrow-back" size={30} />
+            <Image
+              style={{ marginLeft: 10 }}
+              source={require("../../assets/images/back_arrow.png")}
+            />
           </TouchableOpacity>
           <View style={{ marginBottom: 5 }}>
             <Text style={{ fontSize: 22, fontWeight: "bold" }}>{store}</Text>
@@ -194,9 +189,9 @@ export class Menu extends Component {
               Actions.push("search", { _datas: datas, _store: store });
             }}
           >
-            <SvgUri
-              style={{ marginRight: 10 }}
-              source={require("../../assets/images/finder.svg")}
+            <Image
+              style={{ marginRight: 20 }}
+              source={require("../../assets/images/finder.png")}
             />
           </TouchableOpacity>
           {/* <View style={{ flex: 0.1 }} /> */}
@@ -207,12 +202,12 @@ export class Menu extends Component {
             <ScrollableTab
               tabsContainerStyle={{
                 backgroundColor: Platform.OS == "ios" ? "#F8F8F8" : "#FF5000",
-                width: this.width,
+                width: this.width
               }} //#3F51B5
               underlineStyle={{
                 backgroundColor: "#333333",
                 borderWidth: 2,
-                borderColor: "#333333",
+                borderColor: "#333333"
               }}
             />
           )}
@@ -237,7 +232,7 @@ export class Menu extends Component {
           <DialogContent>
             <Image
               source={{
-                uri: this.state.random.image,
+                uri: this.state.random.image
                 //"https://www.mcdelivery.co.kr/kr/static/1556153387275/assets/82/products/1201.png?"
               }}
               style={{ width: 300, height: 300 }}
@@ -247,7 +242,7 @@ export class Menu extends Component {
               style={{
                 justifyContent: "center",
                 alignItems: "center",
-                flexDirection: "row",
+                flexDirection: "row"
               }}
             >
               <Text
@@ -255,7 +250,7 @@ export class Menu extends Component {
                   fontSize: 20,
                   textAlign: "right",
                   marginTop: 15,
-                  fontWeight: "bold",
+                  fontWeight: "bold"
                 }}
               >
                 {this.state.random.name}
@@ -264,7 +259,7 @@ export class Menu extends Component {
                 style={{
                   fontSize: 18,
                   textAlign: "left",
-                  marginTop: 15,
+                  marginTop: 15
                 }}
               >
                 는 어떠세요?
@@ -294,7 +289,7 @@ export class Menu extends Component {
 
 const styles = StyleSheet.create({
   spinnerTextStyle: {
-    color: "#FFF",
+    color: "#FFF"
   },
   randomTextStyle: {
     fontFamily: "PlayfairDisplay-Black",
@@ -303,13 +298,13 @@ const styles = StyleSheet.create({
     fontStyle: "normal",
     letterSpacing: 0.01,
     textAlign: "center",
-    color: "#ffffff",
+    color: "#ffffff"
   },
   randomButtonStyle: {
     backgroundColor: "#444444",
     flex: 0.12,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
   recommendButtonStyle: {
     backgroundColor: "#ff774f",
@@ -318,12 +313,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 15,
     marginRight: 30,
-    marginLeft: 30,
-  },
+    marginLeft: 30
+  }
 });
 
 Menu.propTypes = {
-  store_id: PropTypes.number,
+  store_id: PropTypes.number
 };
 
 export default Menu;

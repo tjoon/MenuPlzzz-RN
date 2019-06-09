@@ -13,9 +13,10 @@ import Spinner from "react-native-loading-spinner-overlay";
 
 import { Actions } from "react-native-router-flux";
 
-import { IP_ADDRESS } from "../../Service/service";
-import { layout } from "../../Styles/layout";
+import SwiperFlatList from "react-native-swiper-flatlist";
 
+import { IP_ADDRESS } from "../../Service/service";
+import { deviceHeight, deviceWidth, layout } from "../../Styles/layout";
 import StoreList from "./Presenter";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
@@ -26,7 +27,16 @@ class Home extends Component {
     this.state = {
       isLoadingComplete: false,
       spinner: true,
+
       items: []
+
+      imageList: [
+        "http://www.mcdonalds.co.kr/uploadFolder/banner/banner_201906070330434080.jpg?timestamp=1559985327696",
+        "http://www.mcdonalds.co.kr/uploadFolder/banner/banner_201906040801014110.jpg",
+        "http://www.mcdonalds.co.kr/uploadFolder/banner/banner_201906040739140260.jpg",
+        "http://www.mcdonalds.co.kr/uploadFolder/banner/banner_201905301256117210.jpg"
+      ]
+
     };
   }
 
@@ -46,7 +56,7 @@ class Home extends Component {
   };
 
   render() {
-    const { isLoadingComplete, items, spinner } = this.state;
+    const { isLoadingComplete, items, spinner, imageList } = this.state;
 
     if (!isLoadingComplete) {
       return (
@@ -57,6 +67,20 @@ class Home extends Component {
         />
       );
     }
+
+    const ImageList = imageList.map((url, index) => (
+      <View key={index} style={[styles.child, { backgroundColor: "#ff5000" }]}>
+        <Image
+          source={{
+            uri: url
+          }}
+          style={{
+            width: deviceHeight,
+            height: deviceHeight * 0.6
+          }}
+        />
+      </View>
+    ));
 
     return (
       <React.Fragment>
@@ -70,6 +94,7 @@ class Home extends Component {
           <View style={{ flex: 0.2 }} />
           <View>
             <Image
+              //style={{ width: 100, height: 20 }}
               source={require("../../assets/images/menu_plzzz_logo.png")}
               resizeMode={"cover"}
             />
@@ -86,7 +111,20 @@ class Home extends Component {
             />
           </TouchableOpacity>
         </View>
-        <StoreList items={items} />
+        <View style={{ flex: 1 }}>
+          <View style={[styles.swipeContainer]}>
+            <SwiperFlatList
+              autoplay
+              autoplayLoop
+              autoplayDelay={2}
+              index={0}
+              showPagination
+            >
+              {ImageList}
+            </SwiperFlatList>
+          </View>
+          <StoreList items={items} />
+        </View>
       </React.Fragment>
     );
   }
@@ -114,6 +152,17 @@ class Home extends Component {
 const styles = StyleSheet.create({
   spinnerTextStyle: {
     color: "#FFF"
+
+  },
+  swipeContainer: {
+    backgroundColor: "white",
+    paddingTop: 10
+  },
+  child: {
+    height: deviceHeight * 0.6,
+    width: deviceWidth,
+    justifyContent: "center"
+
   }
 });
 
