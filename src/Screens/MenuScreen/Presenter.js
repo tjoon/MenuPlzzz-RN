@@ -20,6 +20,7 @@ import {
 import ImageLoad from "react-native-image-placeholder";
 
 const deviceWidth = Dimensions.get("window").width;
+const deviceHeight = Dimensions.get("window").height;
 
 const ChildTab = props => {
   const _likeClick = props.func;
@@ -49,7 +50,7 @@ const ChildTab = props => {
 const MenuItem = props => {
   return (
     <ListItem style={styles.container}>
-      <Left style={styles.left}>
+      <Left style={styles.left1}>
         <TouchableOpacity
           onPress={() =>
             props._likeClick(props.id, props.image, props.name, props.price)
@@ -67,17 +68,28 @@ const MenuItem = props => {
           </View>
         </TouchableOpacity>
       </Left>
-      <Left style={styles.left}>
+
+      <Left style={styles.left2}>
         <ImageLoad
-          style={{ width: deviceWidth * 0.12, height: deviceWidth * 0.12 }}
+          // style={{
+          //   width: "100%",
+          //   height: 100,
+          //   resizeMode: "contain"
+          // }}
+          style={{
+            width: "100%",
+            height: deviceWidth * 0.12,
+            resizeMode: "contain"
+          }}
           loadingStyle={{ size: "large", color: "black" }}
           source={{
             uri: props.image
           }}
         />
       </Left>
+
       <Body style={styles.body}>
-        <Text>{props.name}</Text>
+        <Text style={{ fontWeight: "bold" }}>{props.name}</Text>
         <Text note numberOfLines={1}>
           {props.price}
         </Text>
@@ -94,21 +106,37 @@ const MenuItem = props => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    height: deviceHeight * 0.09,
+    marginLeft: 0
   },
 
-  left: {
-    flex: 1,
+  left1: {
+    flex: 15,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+
+  left2: {
+    flex: 17,
+    width: "100%",
+    height: "100%",
     justifyContent: "center",
     alignItems: "center"
   },
   body: {
-    flex: 5,
-    flexDirection: "column"
+    flex: 62,
+    flexDirection: "column",
+    marginLeft: 10
   },
   right: {
-    flex: 1,
+    flex: 8,
     marginRight: 15
+  },
+  placeHolderStyle: {
+    width: "100%",
+    height: 100,
+    resizeMode: "contain"
   }
 });
 
