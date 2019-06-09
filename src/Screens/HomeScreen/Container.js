@@ -1,7 +1,13 @@
 import { AppLoading, Font } from "expo";
 
 import React, { Component } from "react";
-import { View, Image, StatusBar, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  StatusBar,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 
 import Spinner from "react-native-loading-spinner-overlay";
 
@@ -9,7 +15,6 @@ import SwiperFlatList from "react-native-swiper-flatlist";
 
 import { IP_ADDRESS } from "../../Service/service";
 import { deviceHeight, deviceWidth, layout } from "../../Styles/layout";
-
 import StoreList from "./Presenter";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 

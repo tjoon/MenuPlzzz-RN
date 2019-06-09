@@ -3,7 +3,7 @@ import { Container, Text, Content } from "native-base";
 import { Svg } from "expo";
 
 import React, { Component } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
 
 import { Actions } from "react-native-router-flux";
 
@@ -68,7 +68,10 @@ class Search extends Component {
               Actions.pop();
             }}
           >
-            <Ionicons name="ios-arrow-back" size={30} />
+            <Image
+              style={{ marginLeft: 10 }}
+              source={require("../../assets/images/back_arrow.png")}
+            />
           </TouchableOpacity>
           <View style={{ marginBottom: 5 }}>
             <Text style={{ fontSize: 22, fontWeight: "bold" }}>{store}</Text>
