@@ -33,12 +33,14 @@ class Search extends Component {
 
   getSearchResult = search => {
     const result = [];
-    const data = this.props._datas;
+    if (search !== "") {
+      const data = this.props._datas;
 
-    for (var i = 0; i < data.length; i++) {
-      for (var j = 0; j < data[i].menu.length; j++) {
-        if (data[i].menu[j].name.includes(search)) {
-          result.push(data[i].menu[j]);
+      for (var i = 0; i < data.length; i++) {
+        for (var j = 0; j < data[i].menu.length; j++) {
+          if (data[i].menu[j].name.includes(search)) {
+            result.push(data[i].menu[j]);
+          }
         }
       }
     }

@@ -8,6 +8,7 @@ import { Home } from "./Screens/HomeScreen";
 import { Menu } from "./Screens/MenuScreen/index";
 import { Search } from "./Screens/SearchScreen/index";
 import { Likes } from "./Screens/LikesScreen/index";
+import { WebScreen } from "./Screens/WebScreen/index";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -70,6 +71,12 @@ export default class App extends React.Component {
             key="likes"
             component={Likes}
             title="Likes"
+            hideNavBar={true}
+          />
+          <Scene
+            key="webscreen"
+            component={WebScreen}
+            title="WebScreen"
             hideNavBar={true}
           />
         </Stack>

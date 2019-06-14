@@ -265,7 +265,14 @@ export class Menu extends Component {
                 는 어떠세요?
               </Text>
             </View>
-            <TouchableOpacity style={styles.recommendButtonStyle}>
+            <TouchableOpacity
+              onPress={() => {
+                this.setState({ slideAnimationDialog: false }, () =>
+                  Actions.push("webscreen", { _siteUrl: datas[0].siteUrl })
+                );
+              }}
+              style={styles.recommendButtonStyle}
+            >
               <Text style={styles.randomTextStyle}>자세히 보기</Text>
             </TouchableOpacity>
           </DialogContent>
