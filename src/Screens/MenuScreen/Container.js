@@ -130,6 +130,15 @@ export class Menu extends Component {
     }
   };
 
+  _detailClick = (visible, pName, pImage) => {
+    let temp = {
+      name: pName,
+      image: pImage
+    };
+
+    this.setState({ slideAnimationDialog: visible, random: temp });
+  };
+
   render() {
     const { datas, spinner, slideDetailDialog } = this.state;
     const menuList = this.state.datas.map((ele, index) =>
@@ -145,7 +154,7 @@ export class Menu extends Component {
           <ChildTab
             menu={ele.menu}
             func={this._likeClick}
-            funcDetail={this._detailClick}
+            func2={this._detailClick}
             myLikes={this.state.myLikes}
             slideDetailDialog={this.state.slideDetailDialog}
           />
@@ -162,6 +171,7 @@ export class Menu extends Component {
           <ChildTab
             menu={ele.menu}
             func={this._likeClick}
+            func2={this._detailClick}
             myLikes={this.state.myLikes}
           />
         </Tab>
