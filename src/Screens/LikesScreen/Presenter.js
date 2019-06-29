@@ -3,11 +3,6 @@ import React from "react";
 import { View, Dimensions, StyleSheet, Image } from "react-native";
 
 import ImageLoad from "react-native-image-placeholder";
-import SvgUri from "react-native-svg-uri";
-
-import detailArrow from "../../assets/images/empty_heart.png";
-
-import fillHeart from "../../assets/images/fill_heart.png";
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -40,7 +35,7 @@ const LikeTab = props => {
       </Body>
       <Right>
         <View>
-          <SvgUri source={detailArrow} />
+          <Image source={require("../../assets/images/detail_arrow.png")} />
         </View>
       </Right>
     </ListItem>
