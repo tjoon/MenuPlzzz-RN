@@ -18,12 +18,17 @@ import {
   Image
 } from "react-native";
 import ImageLoad from "react-native-image-placeholder";
+import Dialog, {
+  DialogContent,
+  SlideAnimation
+} from "react-native-popup-dialog";
 
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height;
 
 const ChildTab = props => {
   const _likeClick = props.func;
+  const _detailClick = props.func2;
   const myLikes = props.myLikes;
 
   const menuListItem = props.menu.map((ele, index) => (
@@ -34,6 +39,7 @@ const ChildTab = props => {
       name={ele.name}
       price={ele.price}
       _likeClick={_likeClick}
+      _detailClick={_detailClick}
       myLikes={myLikes}
     />
   ));
@@ -95,10 +101,14 @@ const MenuItem = props => {
         </Text>
       </Body>
       <Right>
-        <View>
-          {/* <SvgUri source={detailArrow} /> */}
-          <Image source={require("../../assets/images/detail_arrow.png")} />
-        </View>
+        <TouchableOpacity
+          onPress={() => props._detailClick(true, props.name, props.image)}
+        >
+          <View>
+            {/* <SvgUri source={detailArrow} /> */}
+            <Image source={require("../../assets/images/detail_arrow.png")} />
+          </View>
+        </TouchableOpacity>
       </Right>
     </ListItem>
   );
@@ -137,6 +147,30 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 100,
     resizeMode: "contain"
+  },
+  randomTextStyle: {
+    fontFamily: "PlayfairDisplay-Black",
+    fontSize: 20,
+    fontWeight: "bold",
+    fontStyle: "normal",
+    letterSpacing: 0.01,
+    textAlign: "center",
+    color: "#ffffff"
+  },
+  randomButtonStyle: {
+    backgroundColor: "#444444",
+    flex: 0.12,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  recommendButtonStyle: {
+    backgroundColor: "#ff774f",
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 15,
+    marginRight: 30,
+    marginLeft: 30
   }
 });
 

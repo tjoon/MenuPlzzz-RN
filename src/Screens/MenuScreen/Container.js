@@ -38,6 +38,7 @@ export class Menu extends Component {
       spinner: true,
       myLikes: {},
       slideAnimationDialog: false,
+      slideDetailDialog: false,
       random: []
     };
   }
@@ -115,6 +116,10 @@ export class Menu extends Component {
     const saveLikes = AsyncStorage.setItem("likes", JSON.stringify(likes));
   };
 
+  _detailClick = visible => {
+    this.setState({ slideDetailDialog: visible });
+  };
+
   _load = async () => {
     try {
       const likes = await AsyncStorage.getItem("likes");
@@ -125,8 +130,17 @@ export class Menu extends Component {
     }
   };
 
+  _detailClick = (visible, pName, pImage) => {
+    let temp = {
+      name: pName,
+      image: pImage
+    };
+
+    this.setState({ slideAnimationDialog: visible, random: temp });
+  };
+
   render() {
-    const { datas, spinner } = this.state;
+    const { datas, spinner, slideDetailDialog } = this.state;
     const menuList = this.state.datas.map((ele, index) =>
       Platform.OS === "android" ? (
         <Tab
@@ -140,7 +154,9 @@ export class Menu extends Component {
           <ChildTab
             menu={ele.menu}
             func={this._likeClick}
+            func2={this._detailClick}
             myLikes={this.state.myLikes}
+            slideDetailDialog={this.state.slideDetailDialog}
           />
         </Tab>
       ) : (
@@ -155,6 +171,7 @@ export class Menu extends Component {
           <ChildTab
             menu={ele.menu}
             func={this._likeClick}
+            func2={this._detailClick}
             myLikes={this.state.myLikes}
           />
         </Tab>
