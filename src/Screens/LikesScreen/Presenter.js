@@ -1,13 +1,13 @@
 import { Text, Left, Right, Body, ListItem } from "native-base";
 import React from "react";
-import { View, Dimensions, StyleSheet } from "react-native";
+import { View, Dimensions, StyleSheet, Image } from "react-native";
 
 import ImageLoad from "react-native-image-placeholder";
 import SvgUri from "react-native-svg-uri";
 
-import detailArrow from "../../assets/images/detail_arrow.svg";
+import detailArrow from "../../assets/images/empty_heart.png";
 
-import fillHeart from "../../assets/images/fill_heart.svg";
+import fillHeart from "../../assets/images/fill_heart.png";
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -16,12 +16,16 @@ const LikeTab = props => {
     <ListItem style={styles.container}>
       <Left style={styles.left}>
         <View>
-          <SvgUri source={fillHeart} />
+          <Image source={require("../../assets/images/fill_heart.png")} />
         </View>
       </Left>
-      <Left style={styles.left}>
+      <Left style={styles.left2}>
         <ImageLoad
-          style={{ width: deviceWidth * 0.12, height: deviceWidth * 0.12 }}
+          style={{
+            width: "100%",
+            height: deviceWidth * 0.12,
+            resizeMode: "contain"
+          }}
           loadingStyle={{ size: "large", color: "black" }}
           source={{
             uri: props.image
@@ -49,12 +53,19 @@ const styles = StyleSheet.create({
   },
 
   left: {
-    flex: 1,
+    flex: 15,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  left2: {
+    flex: 17,
+    width: "100%",
+    height: "100%",
     justifyContent: "center",
     alignItems: "center"
   },
   body: {
-    flex: 5,
+    flex: 62,
     flexDirection: "column"
   }
 });

@@ -18,10 +18,6 @@ import {
   Image
 } from "react-native";
 import ImageLoad from "react-native-image-placeholder";
-import Dialog, {
-  DialogContent,
-  SlideAnimation
-} from "react-native-popup-dialog";
 
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height;
