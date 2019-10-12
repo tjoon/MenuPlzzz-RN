@@ -1,0 +1,8 @@
+{
+	"title": [
+		{
+			"pattern": "#/^[0-9]+$/",
+			"message": "Your title needs this pattern like '#56' or '#70' etc.."
+		}
+	]
+}
