@@ -1,0 +1,8 @@
+{
+	"title": [
+		{
+			"pattern": "No.\\d{1,4}: ",
+			"message": "Your title needs this pattern like '#56' or '#70' etc.."
+		}
+	]
+}
